@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Cart with View Toggle</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+
+  <!-- View Toggle Buttons -->
+  <div class="flex justify-end mb-4 space-x-2">
+    <button id="gridBtn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Grid View</button>
+    <button id="listBtn" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400">List View</button>
+  </div>
+
+  <!-- Products Container -->
+  <div id="products" class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 transition-all duration-300">
+
+    <!-- Product Card -->
+    <div class="product bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition flex flex-col">
+      <div class="h-64 w-full overflow-hidden">
+        <img src="https://via.placeholder.com/600x900" alt="Product"
+             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
+      </div>
+      <div class="p-4 flex flex-col justify-between">
+        <h3 class="text-lg font-semibold text-gray-800">Product Title</h3>
+        <p class="text-gray-500 mt-1">$29.99</p>
+        <button class="mt-4 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">
+          Buy Now
+        </button>
+      </div>
+    </div>
+    <!-- Product Card -->
+    <div class="product bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition flex flex-col">
+      <div class="h-64 w-full overflow-hidden">
+        <img src="https://via.placeholder.com/600x900" alt="Product"
+             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
+      </div>
+      <div class="p-4 flex flex-col justify-between">
+        <h3 class="text-lg font-semibold text-gray-800">Product Title</h3>
+        <p class="text-gray-500 mt-1">$29.99</p>
+        <button class="mt-4 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">
+          Buy Now
+        </button>
+      </div>
+    </div>
+    <!-- Product Card -->
+    <div class="product bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition flex flex-col">
+      <div class="h-64 w-full overflow-hidden">
+        <img src="https://via.placeholder.com/600x900" alt="Product"
+             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
+      </div>
+      <div class="p-4 flex flex-col justify-between">
+        <h3 class="text-lg font-semibold text-gray-800">Product Title</h3>
+        <p class="text-gray-500 mt-1">$29.99</p>
+        <button class="mt-4 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">
+          Buy Now
+        </button>
+      </div>
+    </div>
+    <!-- Product Card -->
+    <div class="product bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition flex flex-col">
+      <div class="h-64 w-full overflow-hidden">
+        <img src="https://via.placeholder.com/600x900" alt="Product"
+             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
+      </div>
+      <div class="p-4 flex flex-col justify-between">
+        <h3 class="text-lg font-semibold text-gray-800">Product Title</h3>
+        <p class="text-gray-500 mt-1">$29.99</p>
+        <button class="mt-4 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">
+          Buy Now
+        </button>
+      </div>
+    </div>
+    <!-- Product Card -->
+    <div class="product bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition flex flex-col">
+      <div class="h-64 w-full overflow-hidden">
+        <img src="https://via.placeholder.com/600x900" alt="Product"
+             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
+      </div>
+      <div class="p-4 flex flex-col justify-between">
+        <h3 class="text-lg font-semibold text-gray-800">Product Title</h3>
+        <p class="text-gray-500 mt-1">$29.99</p>
+        <button class="mt-4 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">
+          Buy Now
+        </button>
+      </div>
+    </div>
+    <!-- Product Card -->
+    <div class="product bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition flex flex-col">
+      <div class="h-64 w-full overflow-hidden">
+        <img src="https://via.placeholder.com/600x900" alt="Product"
+             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
+      </div>
+      <div class="p-4 flex flex-col justify-between">
+        <h3 class="text-lg font-semibold text-gray-800">Product Title</h3>
+        <p class="text-gray-500 mt-1">$29.99</p>
+        <button class="mt-4 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">
+          Buy Now
+        </button>
+      </div>
+    </div>
+    <!-- Product Card -->
+    <div class="product bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition flex flex-col">
+      <div class="h-64 w-full overflow-hidden">
+        <img src="https://via.placeholder.com/600x900" alt="Product"
+             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
+      </div>
+      <div class="p-4 flex flex-col justify-between">
+        <h3 class="text-lg font-semibold text-gray-800">Product Title</h3>
+        <p class="text-gray-500 mt-1">$29.99</p>
+        <button class="mt-4 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">
+          Buy Now
+        </button>
+      </div>
+    </div>
+    <!-- Product Card -->
+    <div class="product bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition flex flex-col">
+      <div class="h-64 w-full overflow-hidden">
+        <img src="https://via.placeholder.com/600x900" alt="Product"
+             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
+      </div>
+      <div class="p-4 flex flex-col justify-between">
+        <h3 class="text-lg font-semibold text-gray-800">Product Title</h3>
+        <p class="text-gray-500 mt-1">$29.99</p>
+        <button class="mt-4 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">
+          Buy Now
+        </button>
+      </div>
+    </div>
+
+    <!-- Repeat .product card for more products -->
+
+  </div>
+
+  <!-- View Toggle Script -->
+  <script>
+    const gridBtn = document.getElementById('gridBtn');
+    const listBtn = document.getElementById('listBtn');
+    const products = document.getElementById('products');
+
+    gridBtn.addEventListener('click', () => {
+      products.className = 'grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 transition-all duration-300';
+      document.querySelectorAll('.product').forEach(p => {
+        p.classList.remove('flex-row');
+        p.querySelector('img').classList.remove('w-48', 'h-auto');
+        p.querySelector('img').classList.add('w-full', 'h-full', 'object-cover');
+      });
+    });
+
+    listBtn.addEventListener('click', () => {
+      products.className = 'flex flex-col gap-4 transition-all duration-300';
+      document.querySelectorAll('.product').forEach(p => {
+        p.classList.add('flex-row');
+        p.querySelector('img').classList.remove('w-full', 'h-full', 'object-cover');
+        p.querySelector('img').classList.add('w-48', 'h-auto');
+      });
+    });
+  </script>
+
+</body>
+</html>

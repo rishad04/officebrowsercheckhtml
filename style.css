@@ -1,0 +1,124 @@
+/* Reset & base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  background: #444;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.product-page {
+  background: #fff;
+  padding: 1rem;
+  max-width: 600px;
+  width: 100%;
+  border-radius: 6px;
+}
+
+.product-card {
+  min-height: 120px; /* or same height for consistency */
+}
+
+.product-page__header {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.view-toggle {
+  background: #eee;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.view-toggle--active {
+  background: #ccc;
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.product-list--grid .product-card {
+  width: calc(50% - 0.5rem);
+  flex-direction: column;
+}
+
+.product-list--list {
+  flex-direction: column;
+}
+
+/* .product-list--list .product-card {
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+} */
+
+.product-card {
+  display: flex;
+  background: #f2f2f2;
+  border-radius: 6px;
+  overflow: hidden;
+  padding: 1rem;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.product-card__image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #ccc;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+/* .product-list--list .product-card__image {
+  width: 100px;
+  height: 100px;
+} */
+
+.product-card__info p {
+  margin-bottom: 0.25rem;
+}
+
+
+.product-list--list .product-card {
+  display: flex;
+  width: 100%;
+  align-items: center; /* vertical centering */
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.product-list--list .product-card__image {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+}
+
+.product-list--list .product-card__info {
+  flex: 1; /* allow text to take remaining space */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+@media (max-width: 500px) {
+  .product-list--grid .product-card {
+    width: 100%;
+  }
+}

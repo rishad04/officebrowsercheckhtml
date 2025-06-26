@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product List</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="product-page">
+    <div class="product-page__header">
+      <button id="gridViewBtn" class="view-toggle view-toggle--active">🔲</button>
+      <button id="listViewBtn" class="view-toggle">📃</button>
+    </div>
+
+    <section class="product-list product-list--grid" id="productList">
+      <!-- Product Cards -->
+      <div class="product-card">
+        <div class="product-card__image"></div>
+        <div class="product-card__info">
+          <p>Some text</p>
+          <p>Price</p>
+          <p>Status</p>
+        </div>
+      </div>
+      <!-- Duplicate for demo -->
+      <div class="product-card"><div class="product-card__image"></div><div class="product-card__info"><p>Some text</p><p>Price</p><p>Status</p></div></div>
+      <div class="product-card"><div class="product-card__image"></div><div class="product-card__info"><p>Some text</p><p>Price</p><p>Status</p></div></div>
+      <div class="product-card"><div class="product-card__image"></div><div class="product-card__info"><p>Some text</p><p>Price</p><p>Status</p></div></div>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+CSS:
+
+/* Reset & base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  background: #444;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.product-page {
+  background: #fff;
+  padding: 1rem;
+  max-width: 600px;
+  width: 100%;
+  border-radius: 6px;
+}
+
+.product-page__header {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.view-toggle {
+  background: #eee;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.view-toggle--active {
+  background: #ccc;
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.product-list--grid .product-card {
+  width: calc(50% - 0.5rem);
+  flex-direction: column;
+}
+
+.product-list--list {
+  flex-direction: column;
+}
+
+.product-list--list .product-card {
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+}
+
+.product-card {
+  display: flex;
+  background: #f2f2f2;
+  border-radius: 6px;
+  overflow: hidden;
+  padding: 1rem;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.product-card__image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #ccc;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.product-list--list .product-card__image {
+  width: 100px;
+  height: 100px;
+}
+
+.product-card__info p {
+  margin-bottom: 0.25rem;
+}
+
+@media (max-width: 500px) {
+  .product-list--grid .product-card {
+    width: 100%;
+  }
+}
+
+JS:
+
+const gridBtn = document.getElementById('gridViewBtn');
+const listBtn = document.getElementById('listViewBtn');
+const productList = document.getElementById('productList');
+
+gridBtn.addEventListener('click', () => {
+  productList.classList.add('product-list--grid');
+  productList.classList.remove('product-list--list');
+  gridBtn.classList.add('view-toggle--active');
+  listBtn.classList.remove('view-toggle--active');
+});
+
+listBtn.addEventListener('click', () => {
+  productList.classList.remove('product-list--grid');
+  productList.classList.add('product-list--list');
+  listBtn.classList.add('view-toggle--active');
+  gridBtn.classList.remove('view-toggle--active');
+});
+
