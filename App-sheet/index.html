@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flutter Overlay App UI Mockup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .title {
+            text-align: center;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .screens-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .phone-mockup {
+            background: #1a1a1a;
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            position: relative;
+            transform: perspective(1000px) rotateY(5deg);
+            transition: all 0.3s ease;
+        }
+
+        .phone-mockup:hover {
+            transform: perspective(1000px) rotateY(0deg) scale(1.02);
+        }
+
+        .phone-screen {
+            background: white;
+            border-radius: 20px;
+            min-height: 500px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+        }
+
+        .status-bar {
+            background: #f8f9fa;
+            height: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            font-size: 12px;
+            color: #333;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .screen-title {
+            background: #2196F3;
+            color: white;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .screen-content {
+            padding: 20px;
+        }
+
+        .floating-button {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
+            background: #FF5722;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 6px 20px rgba(255,87,34,0.4);
+            cursor: pointer;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 6px 20px rgba(255,87,34,0.4); }
+            50% { box-shadow: 0 6px 30px rgba(255,87,34,0.6); }
+            100% { box-shadow: 0 6px 20px rgba(255,87,34,0.4); }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #2196F3;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #2196F3;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1976D2;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .entry-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #2196F3;
+        }
+
+        .entry-header {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .entry-meta {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .fab-icon {
+            font-size: 24px;
+        }
+
+        .screen-description {
+            color: white;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .feature-highlight {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            color: white;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+
+        .feature-icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .overlay-demo {
+            position: relative;
+            background: linear-gradient(45deg, #333, #555);
+            border-radius: 15px;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Flutter Overlay Data Entry App</h1>
+        
+        <div class="screens-grid">
+            <!-- Main Screen with Floating Button -->
+            <div class="phone-mockup">
+                <div class="phone-screen">
+                    <div class="status-bar">
+                        <span>9:41</span>
+                        <span>📶 📶 📶 🔋</span>
+                    </div>
+                    <div class="overlay-demo">
+                        <div style="text-align: center;">
+                            <div style="font-size: 48px; margin-bottom: 20px;">📱</div>
+                            <div>Any App Running</div>
+                            <div style="font-size: 14px; opacity: 0.7; margin-top: 10px;">Overlay button floats on top</div>
+                        </div>
+                        <div class="floating-button">
+                            <span class="fab-icon">+</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="screen-description">Floating Action Button - Always accessible over any app</div>
+            </div>
+
+            <!-- Form Selection Screen -->
+            <div class="phone-mockup">
+                <div class="phone-screen">
+                    <div class="status-bar">
+                        <span>9:41</span>
+                        <span>📶 📶 📶 🔋</span>
+                    </div>
+                    <div class="screen-title">Data Entry Form</div>
+                    <div class="screen-content">
+                        <div class="form-group">
+                            <label class="form-label">Select Spreadsheet</label>
+                            <select class="form-input">
+                                <option>Personal Groups</option>
+                                <option>Work Categories</option>
+                                <option>Project Teams</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Group Name</label>
+                            <input type="text" class="form-input" placeholder="Enter group name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Category</label>
+                            <input type="text" class="form-input" placeholder="Enter category">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-input" rows="3" placeholder="Additional details"></textarea>
+                        </div>
+                        
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn btn-secondary">Cancel</button>
+                            <button class="btn btn-primary">Save Entry</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="screen-description">Data Entry Form - Quick input with spreadsheet selection</div>
+            </div>
+
+            <!-- Data View Screen -->
+            <div class="phone-mockup">
+                <div class="phone-screen">
+                    <div class="status-bar">
+                        <span>9:41</span>
+                        <span>📶 📶 📶 🔋</span>
+                    </div>
+                    <div class="screen-title">Saved Entries</div>
+                    <div class="screen-content">
+                        <div class="entry-item">
+                            <div class="entry-header">Development Team</div>
+                            <div class="entry-meta">Category: Work • Personal Groups</div>
+                            <div class="entry-meta">Added: 2 hours ago</div>
+                        </div>
+                        
+                        <div class="entry-item">
+                            <div class="entry-header">Friends Group</div>
+                            <div class="entry-meta">Category: Social • Personal Groups</div>
+                            <div class="entry-meta">Added: 1 day ago</div>
+                        </div>
+                        
+                        <div class="entry-item">
+                            <div class="entry-header">Project Alpha</div>
+                            <div class="entry-meta">Category: Priority • Work Categories</div>
+                            <div class="entry-meta">Added: 3 days ago</div>
+                        </div>
+                        
+                        <div class="entry-item">
+                            <div class="entry-header">Study Group</div>
+                            <div class="entry-meta">Category: Education • Personal Groups</div>
+                            <div class="entry-meta">Added: 1 week ago</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="screen-description">Saved Entries View - All your data organized and accessible</div>
+            </div>
+        </div>
+
+        <div class="feature-highlight">
+            <h2 style="color: white; text-align: center; margin-bottom: 20px;">Key Features</h2>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <span class="feature-icon">🎯</span>
+                    <span>System-wide overlay button</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📊</span>
+                    <span>Multiple spreadsheet support</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">💾</span>
+                    <span>Local data storage</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">⚡</span>
+                    <span>Quick data entry</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🔍</span>
+                    <span>Easy data browsing</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📱</span>
+                    <span>Works over any app</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

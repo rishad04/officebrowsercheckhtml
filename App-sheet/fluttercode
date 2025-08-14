@@ -1,0 +1,575 @@
+// pubspec.yaml dependencies needed:
+/*
+dependencies:
+  flutter:
+    sdk: flutter
+  system_alert_window: ^2.0.2
+  permission_handler: ^10.4.3
+  sqflite: ^2.3.0
+  path: ^1.8.3
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+*/
+
+// main.dart
+import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:system_alert_window/system_alert_window.dart';
+import 'database_helper.dart';
+import 'data_entry_screen.dart';
+import 'entries_list_screen.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Overlay Data Entry',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        useMaterial3: true,
+      ),
+      home: HomeScreen(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool _isOverlayActive = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _requestPermissions();
+  }
+
+  Future<void> _requestPermissions() async {
+    await Permission.systemAlertWindow.request();
+    await Permission.storage.request();
+  }
+
+  Future<void> _showOverlay() async {
+    if (await Permission.systemAlertWindow.isGranted) {
+      SystemAlertWindow.showSystemWindow(
+        height: 100,
+        width: 100,
+        margin: SystemWindowMargin(left: 16, top: 200, right: 16, bottom: 16),
+        gravity: SystemWindowGravity.BOTTOM,
+        notificationTitle: "Overlay Active",
+        notificationBody: "Tap the floating button to add data",
+        prefMode: SystemWindowPrefMode.OVERLAY,
+      );
+
+      setState(() {
+        _isOverlayActive = true;
+      });
+    } else {
+      _showPermissionDialog();
+    }
+  }
+
+  Future<void> _hideOverlay() async {
+    await SystemAlertWindow.closeSystemWindow();
+    setState(() {
+      _isOverlayActive = false;
+    });
+  }
+
+  void _showPermissionDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Permission Required'),
+          content: Text(
+            'This app needs overlay permission to show the floating button over other apps. Please grant the permission in settings.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                openAppSettings();
+              },
+              child: Text('Settings'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Data Entry App'),
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
+        elevation: 2,
+      ),
+      body: Container(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Card(
+              elevation: 4,
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.add_circle_outline,
+                      size: 60,
+                      color: Colors.blue,
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      'Overlay Status',
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      _isOverlayActive ? 'Active' : 'Inactive',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: _isOverlayActive ? Colors.green : Colors.red,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 24),
+            ElevatedButton.icon(
+              onPressed: _isOverlayActive ? _hideOverlay : _showOverlay,
+              icon: Icon(_isOverlayActive ? Icons.stop : Icons.play_arrow),
+              label: Text(_isOverlayActive ? 'Stop Overlay' : 'Start Overlay'),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.all(16),
+                backgroundColor: _isOverlayActive ? Colors.red : Colors.blue,
+                foregroundColor: Colors.white,
+              ),
+            ),
+            SizedBox(height: 16),
+            ElevatedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DataEntryScreen()),
+                );
+              },
+              icon: Icon(Icons.add),
+              label: Text('Add New Entry'),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.all(16),
+                backgroundColor: Colors.green,
+                foregroundColor: Colors.white,
+              ),
+            ),
+            SizedBox(height: 16),
+            ElevatedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EntriesListScreen()),
+                );
+              },
+              icon: Icon(Icons.list),
+              label: Text('View All Entries'),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.all(16),
+                backgroundColor: Colors.purple,
+                foregroundColor: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// database_helper.dart
+import 'dart:async';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+
+class DatabaseHelper {
+  static final DatabaseHelper _instance = DatabaseHelper._internal();
+  static Database? _database;
+
+  DatabaseHelper._internal();
+
+  factory DatabaseHelper() {
+    return _instance;
+  }
+
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+    _database = await _initDatabase();
+    return _database!;
+  }
+
+  Future<Database> _initDatabase() async {
+    String path = join(await getDatabasesPath(), 'data_entries.db');
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate: _onCreate,
+    );
+  }
+
+  Future<void> _onCreate(Database db, int version) async {
+    await db.execute('''
+      CREATE TABLE entries(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        spreadsheet TEXT NOT NULL,
+        group_name TEXT NOT NULL,
+        category TEXT NOT NULL,
+        description TEXT,
+        created_at TEXT NOT NULL
+      )
+    ''');
+    
+    await db.execute('''
+      CREATE TABLE spreadsheets(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL UNIQUE
+      )
+    ''');
+
+    // Insert default spreadsheets
+    await db.insert('spreadsheets', {'name': 'Personal Groups'});
+    await db.insert('spreadsheets', {'name': 'Work Categories'});
+    await db.insert('spreadsheets', {'name': 'Project Teams'});
+  }
+
+  Future<int> insertEntry(Map<String, dynamic> entry) async {
+    final db = await database;
+    return await db.insert('entries', entry);
+  }
+
+  Future<List<Map<String, dynamic>>> getEntries() async {
+    final db = await database;
+    return await db.query(
+      'entries',
+      orderBy: 'created_at DESC',
+    );
+  }
+
+  Future<List<Map<String, dynamic>>> getSpreadsheets() async {
+    final db = await database;
+    return await db.query('spreadsheets');
+  }
+
+  Future<int> addSpreadsheet(String name) async {
+    final db = await database;
+    return await db.insert('spreadsheets', {'name': name});
+  }
+
+  Future<int> deleteEntry(int id) async {
+    final db = await database;
+    return await db.delete('entries', where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<int> updateEntry(int id, Map<String, dynamic> entry) async {
+    final db = await database;
+    return await db.update('entries', entry, where: 'id = ?', whereArgs: [id]);
+  }
+}
+
+// data_entry_screen.dart
+import 'package:flutter/material.dart';
+import 'database_helper.dart';
+
+class DataEntryScreen extends StatefulWidget {
+  @override
+  _DataEntryScreenState createState() => _DataEntryScreenState();
+}
+
+class _DataEntryScreenState extends State<DataEntryScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _groupNameController = TextEditingController();
+  final _categoryController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  
+  String? _selectedSpreadsheet;
+  List<Map<String, dynamic>> _spreadsheets = [];
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSpreadsheets();
+  }
+
+  Future<void> _loadSpreadsheets() async {
+    final spreadsheets = await DatabaseHelper().getSpreadsheets();
+    setState(() {
+      _spreadsheets = spreadsheets;
+      if (spreadsheets.isNotEmpty) {
+        _selectedSpreadsheet = spreadsheets[0]['name'];
+      }
+    });
+  }
+
+  Future<void> _saveEntry() async {
+    if (_formKey.currentState!.validate() && _selectedSpreadsheet != null) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      final entry = {
+        'spreadsheet': _selectedSpreadsheet,
+        'group_name': _groupNameController.text.trim(),
+        'category': _categoryController.text.trim(),
+        'description': _descriptionController.text.trim(),
+        'created_at': DateTime.now().toIso8601String(),
+      };
+
+      try {
+        await DatabaseHelper().insertEntry(entry);
+        
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Entry saved successfully!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        
+        _clearForm();
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error saving entry: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  void _clearForm() {
+    _groupNameController.clear();
+    _categoryController.clear();
+    _descriptionController.clear();
+  }
+
+  void _showAddSpreadsheetDialog() {
+    final controller = TextEditingController();
+    
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Add New Spreadsheet'),
+          content: TextField(
+            controller: controller,
+            decoration: InputDecoration(
+              hintText: 'Spreadsheet name',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () async {
+                if (controller.text.trim().isNotEmpty) {
+                  try {
+                    await DatabaseHelper().addSpreadsheet(controller.text.trim());
+                    Navigator.of(context).pop();
+                    _loadSpreadsheets();
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Error adding spreadsheet')),
+                    );
+                  }
+                }
+              },
+              child: Text('Add'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Add New Entry'),
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: _showAddSpreadsheetDialog,
+            tooltip: 'Add Spreadsheet',
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: [
+              Card(
+                elevation: 2,
+                child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Select Spreadsheet',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      SizedBox(height: 8),
+                      DropdownButtonFormField<String>(
+                        value: _selectedSpreadsheet,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        ),
+                        items: _spreadsheets.map((spreadsheet) {
+                          return DropdownMenuItem<String>(
+                            value: spreadsheet['name'],
+                            child: Text(spreadsheet['name']),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedSpreadsheet = value;
+                          });
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please select a spreadsheet';
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+              Card(
+                elevation: 2,
+                child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Entry Details',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      SizedBox(height: 16),
+                      TextFormField(
+                        controller: _groupNameController,
+                        decoration: InputDecoration(
+                          labelText: 'Group Name',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.group),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'Please enter a group name';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 16),
+                      TextFormField(
+                        controller: _categoryController,
+                        decoration: InputDecoration(
+                          labelText: 'Category',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.category),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'Please enter a category';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 16),
+                      TextFormField(
+                        controller: _descriptionController,
+                        decoration: InputDecoration(
+                          labelText: 'Description (Optional)',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.description),
+                        ),
+                        maxLines: 3,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 24),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: _clearForm,
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.all(16),
+                        backgroundColor: Colors.grey,
+                        foregroundColor: Colors.white,
+                      ),
+                      child: Text('Clear'),
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    flex: 2,
+                    child: ElevatedButton(
+                      onPressed: _isLoading ? null : _saveEntry,
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.all(16),
+                        backgroundColor: Colors.green,
+                        foregroundColor: Colors.white,
+                      ),
+                      child: _isLoading
+                          ? CircularProgressIndicator(color: Colors.white)
+                          : Text('Save Entry'),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
