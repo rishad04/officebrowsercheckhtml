@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rishad Hossain - Backend Developer CV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.5;
+            color: #333;
+            background-color: #ffffff;
+            padding: 20px;
+        }
+
+        .cv-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border: 1px solid #e0e0e0;
+        }
+
+        .header {
+            padding: 30px;
+            border-bottom: 2px solid #000;
+        }
+
+        .name {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .title {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .main-content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .summary-text {
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: #444;
+            text-align: justify;
+        }
+
+        .education-item, .experience-item {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .education-item:last-child, .experience-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .degree, .job-title {
+            font-size: 1em;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .institution, .company {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .date-location {
+            font-size: 0.85em;
+            color: #888;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .gpa {
+            font-size: 0.85em;
+            color: #000;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .modules ul, .achievements ul {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 8px;
+        }
+
+        .modules li {
+            font-size: 0.9em;
+            color: #666;
+            margin: 3px 0;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .modules li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #999;
+        }
+
+        .achievements li {
+            font-size: 0.9em;
+            color: #555;
+            margin: 5px 0;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .achievements li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #000;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-category {
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+        }
+
+        .skill-category h4 {
+            font-size: 0.95em;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .skill-list {
+            font-size: 0.9em;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .languages-container {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .language-item {
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .language-name {
+            font-weight: bold;
+            color: #000;
+        }
+
+        .certifications-list, .extracurricular-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .cert-item, .extra-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .cert-name, .extra-title {
+            font-weight: bold;
+            color: #000;
+            font-size: 0.9em;
+        }
+
+        .cert-issuer, .extra-desc {
+            color: #666;
+            font-size: 0.85em;
+            margin-top: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .cv-container {
+                margin: 0;
+                border: none;
+            }
+            
+            .header, .main-content {
+                padding: 20px;
+            }
+            
+            .item-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .date-location {
+                text-align: left;
+                margin-top: 5px;
+            }
+            
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .cv-container {
+                border: none;
+                max-width: none;
+            }
+            
+            .section {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cv-container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1 class="name">RISHAD HOSSAIN</h1>
+            <p class="title">Backend Developer (Laravel)</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>Email:</span>
+                    <span>rishadhossaincareer@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <span>Phone:</span>
+                    <span>01920502041</span>
+                </div>
+                <div class="contact-item">
+                    <span>LinkedIn:</span>
+                    <span>linkedin.com/in/rishad-hossain-591b8a2b1</span>
+                </div>
+                <div class="contact-item">
+                    <span>Address:</span>
+                    <span>5, Elephant Road, Dhaka</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Professional Summary -->
+            <div class="section">
+                <h2 class="section-title">Professional Summary</h2>
+                <p class="summary-text">
+                    Passionate and experienced Laravel Developer with over 2 years of experience building scalable, high-performance web applications using Laravel, MySQL, and RESTful APIs. Comfortable with CI/CD, Git (Bitbucket), and front-end technologies like HTML, CSS, JS and Vue.js. Experienced in API integration, optimizing databases, and following best coding practices. Enjoy solving problems, communicating effectively, and working closely with cross-functional teams to deliver scalable applications.
+                </p>
+            </div>
+
+            <!-- Education -->
+            <div class="section">
+                <h2 class="section-title">Education</h2>
+                
+                <div class="education-item">
+                    <div class="item-header">
+                        <div>
+                            <h3 class="degree">B.Sc in Computer Science & Engineering</h3>
+                            <p class="institution">City College, Dhaka</p>
+                        </div>
+                        <div class="date-location">
+                            2019 - 2023 | Dhaka, BD
+                            <span class="gpa">CGPA: 3.17/4.00</span>
+                        </div>
+                    </div>
+                    <div class="modules">
+                        <ul>
+                            <li>Software Engineering & Development</li>
+                            <li>Database Management Systems</li>
+                            <li>Web Technologies & API Development</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="education-item">
+                    <div class="item-header">
+                        <div>
+                            <h3 class="degree">Higher Secondary Certificate (HSC)</h3>
+                            <p class="institution">Science Background</p>
+                        </div>
+                        <div class="date-location">
+                            2018 | Dhaka, BD
+                            <span class="gpa">GPA: 4.83/5.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="education-item">
+                    <div class="item-header">
+                        <div>
+                            <h3 class="degree">Secondary School Certificate (SSC)</h3>
+                            <p class="institution">Science Background</p>
+                        </div>
+                        <div class="date-location">
+                            2016 | Dhaka, BD
+                            <span class="gpa">GPA: 5.00/5.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Work Experience -->
+            <div class="section">
+                <h2 class="section-title">Work Experience</h2>
+                
+                <div class="experience-item">
+                    <div class="item-header">
+                        <div>
+                            <h3 class="job-title">Backend Developer (Laravel)</h3>
+                            <p class="company">The Tork Inc.</p>
+                        </div>
+                        <div class="date-location">
+                            October 2024 - Present | Dhaka, BD
+                        </div>
+                    </div>
+                    <div class="achievements">
+                        <ul>
+                            <li>Architect and develop high-performance CMS/LMS applications using Laravel, leveraging Eloquent ORM and Blade Engineering</li>
+                            <li>Design, implement, and enhance RESTful APIs, ensuring efficient communication between backend, frontend, and mobile applications</li>
+                            <li>Integrate 3rd party APIs like OAuth, Payment Gateways (Stripe, PayPal) for enhanced functionality</li>
+                            <li>Structure and fine-tune MySQL databases, optimizing queries for high-traffic environments</li>
+                            <li>Streamline deployment processes with CI/CD pipelines while maintaining robust version control workflows</li>
+                            <li>Collaborate with front-end teams, integrating HTML, CSS, JavaScript, and React technologies</li>
+                            <li>Maintain and evolve existing applications, troubleshoot complex issues, and implement new features</li>
+                            <li>Manage clients and oversee project execution, ensuring team productivity and timely delivery</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="item-header">
+                        <div>
+                            <h3 class="job-title">Junior Web Developer</h3>
+                            <p class="company">BugBuild Labs Pvt.</p>
+                        </div>
+                        <div class="date-location">
+                            April 2022 - October 2024 | Dhaka, BD
+                        </div>
+                    </div>
+                    <div class="achievements">
+                        <ul>
+                            <li>Developed content management applications including school management systems and logistics platforms</li>
+                            <li>Built and tested robust RESTful APIs using Laravel, utilizing Postman for efficient API testing</li>
+                            <li>Designed databases, wrote optimized queries, and resolved issues to maintain database integrity</li>
+                            <li>Updated legacy systems by incorporating advanced features for improved functionality</li>
+                            <li>Enhanced application security by following best practices and minimizing code duplication</li>
+                            <li>Managed version control with GitHub and collaborated effectively in team environments</li>
+                            <li>Managed projects and mentored trainees, providing clear instructions and task oversight</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="item-header">
+                        <div>
+                            <h3 class="job-title">Trainee Web Developer</h3>
+                            <p class="company">Creative Sense PLC</p>
+                        </div>
+                        <div class="date-location">
+                            February 2021 - March 2022 | Dhaka, BD
+                        </div>
+                    </div>
+                    <div class="achievements">
+                        <ul>
+                            <li>Applied foundational knowledge in HTML5, CSS3, and JavaScript for responsive design development</li>
+                            <li>Gained expertise in MVC patterns and Laravel for building dynamic applications</li>
+                            <li>Managed projects using Git and GitHub to streamline development processes</li>
+                            <li>Conducted client requirement analysis and research to create tailored solutions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="section">
+                <h2 class="section-title">Technical Skills</h2>
+                <div class="skills-container">
+                    <div class="skill-category">
+                        <h4>Backend Technologies</h4>
+                        <p class="skill-list">Laravel, PHP, RESTful APIs, Eloquent ORM, Blade Templating, Authentication, Security, Queues & Jobs</p>
+                    </div>
+                    <div class="skill-category">
+                        <h4>Database</h4>
+                        <p class="skill-list">MySQL, SQL, SQLite, Database Design, Query Optimization</p>
+                    </div>
+                    <div class="skill-category">
+                        <h4>Frontend</h4>
+                        <p class="skill-list">JavaScript, jQuery, HTML5, CSS3, Bootstrap, Vue.js, AJAX</p>
+                    </div>
+                    <div class="skill-category">
+                        <h4>Tools & DevOps</h4>
+                        <p class="skill-list">Git, GitHub, Bitbucket, CI/CD, Docker, Postman, API Documentation</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Languages -->
+            <div class="section">
+                <h2 class="section-title">Languages</h2>
+                <div class="languages-container">
+                    <div class="language-item">
+                        <span class="language-name">English:</span> Advanced Proficiency
+                    </div>
+                    <div class="language-item">
+                        <span class="language-name">Spanish:</span> Intermediate
+                    </div>
+                    <div class="language-item">
+                        <span class="language-name">Bengali:</span> Native
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certifications -->
+            <div class="section">
+                <h2 class="section-title">Certifications</h2>
+                <div class="certifications-list">
+                    <div class="cert-item">
+                        <div class="cert-name">Google Analytics Certification</div>
+                        <div class="cert-issuer">Google</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-name">Facebook Blueprint Certification</div>
+                        <div class="cert-issuer">Meta</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-name">Laravel Advanced Certification</div>
+                        <div class="cert-issuer">Laravel</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Extracurricular Activities -->
+            <div class="section">
+                <h2 class="section-title">Extracurricular Activities</h2>
+                <div class="extracurricular-list">
+                    <div class="extra-item">
+                        <div class="extra-title">International Student Ambassador</div>
+                        <div class="extra-desc">Led campus tours and held talks to promote university programs</div>
+                    </div>
+                    <div class="extra-item">
+                        <div class="extra-title">Media Secretary</div>
+                        <div class="extra-desc">Increased social media sales through strategic promotional offers</div>
+                    </div>
+                    <div class="extra-item">
+                        <div class="extra-title">Treasurer</div>
+                        <div class="extra-desc">Fundraised +£5000 to help fund campus events and activities</div>
+                    </div>
+                    <div class="extra-item">
+                        <div class="extra-title">Vice President</div>
+                        <div class="extra-desc">Led a team of 200 members ensuring 9.5/10 satisfaction score</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

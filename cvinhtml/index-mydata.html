@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rishad Hossain — ATS‑Friendly Resume</title>
+  <meta name="description" content="ATS-friendly, accessible, print-ready resume for a Laravel developer." />
+  <style>
+    :root{
+      --bg: #ffffff;
+      --ink: #0f172a;         /* slate-900 */
+      --muted: #475569;       /* slate-600 */
+      --line: #e2e8f0;        /* slate-200 */
+      --brand: #0ea5e9;       /* sky-500 */
+      --maxw: 960px;
+    }
+    html,body{ height:100%; }
+    body{
+      margin:0; background:var(--bg); color:var(--ink);
+      font: 14px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    .page{ max-width:var(--maxw); margin:32px auto; padding:0 20px 48px; }
+
+    /* Header */
+    header{
+      border-bottom:1px solid var(--line);
+      padding-bottom:16px; margin-bottom:24px;
+    }
+    .name{ font-size:clamp(24px, 4vw, 34px); font-weight:800; letter-spacing:0.2px; }
+    .role{ color:var(--muted); margin-top:2px; }
+    .contact{ display:flex; flex-wrap:wrap; gap:10px 18px; margin-top:10px; color:var(--muted); }
+    .contact a{ color:inherit; text-decoration:none; border-bottom:1px solid transparent; }
+    .contact a:focus, .contact a:hover{ color:var(--ink); border-bottom-color:var(--brand); }
+
+    /* Layout */
+    .grid{ display:grid; gap:24px; }
+    @media (min-width: 920px){
+      .grid{ grid-template-columns: 300px 1fr; align-items:start; }
+      .sidebar{ position:sticky; top:16px; }
+    }
+
+    /* Section styling */
+    section{ padding-block:8px; }
+    h2{ font-size:15px; letter-spacing:0.6px; text-transform:uppercase; margin:0 0 10px; color:#111827; }
+    .card{ border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom: 10px; background:#fff; }
+
+    /* Lists */
+    ul{ margin:8px 0 0 18px; padding:0; }
+    li{ margin:6px 0; }
+
+    /* Blocks */
+    .item{ margin-bottom:14px; }
+    .item:last-child{ margin-bottom:0; }
+    .topline{ display:flex; flex-wrap:wrap; gap:8px 14px; align-items:baseline; }
+    .title{ font-weight:700; }
+    .meta{ color:var(--muted); }
+    .tags{ display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+    .tag{ font-size:12px; padding:2px 8px; border:1px solid var(--line); border-radius:999px; color:#334155; background:#f8fafc; }
+
+    /* Buttons */
+    .toolbar{ display:flex; gap:10px; margin:6px 0 18px; }
+    .btn{ appearance:none; border:1px solid var(--line); background:#fff; padding:8px 12px; border-radius:10px; cursor:pointer; font-weight:600; }
+    .btn:hover{ border-color:#cbd5e1; }
+
+    /* Print styles */
+    @media print{
+      .toolbar{ display:none !important; }
+      body{ color:#000; }
+      .page{ margin:0; padding:0; }
+      header{ border:none; padding-bottom:0; margin-bottom:8px; }
+      .grid{ display:block; }
+      .card{ border:none; padding:0; }
+      h2{ margin-top:12px; }
+      a{ color:inherit; text-decoration:none; }
+      .tag{ border:1px solid #ddd; background:#fff; }
+      .item{ break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page" role="document">
+    <header>
+      <div class="name" aria-label="Candidate name">Rishad Hossain</div>
+      <div class="role">Backend Developer (Laravel)</div>
+      <div class="contact" aria-label="Contact and links">
+        <span>Email: <a href="mailto:rishadhossaincareer@gmail.com">rishadhossaincareer@gmail.com</a></span>
+        <span>Phone: <a href="tel:+8801920502041">01920502041</a></span>
+        <span>Location: 5, Elephant Road, Dhaka</span>
+        <span>LinkedIn: <a href="https://linkedin.com/in/rishad-hossain-591b8a2b1">linkedin.com/in/rishad-hossain-591b8a2b1</a></span>
+      </div>
+      <div class="toolbar">
+        <button class="btn" onclick="window.print()">Download / Print PDF</button>
+        <a class="btn" href="#experience">Jump to Experience</a>
+      </div>
+    </header>
+
+    <main class="grid">
+      <!-- Sidebar -->
+      <aside class="sidebar" aria-label="Sidebar">
+        <section class="card" id="summary">
+          <h2>Summary</h2>
+          <p>
+            Passionate and experienced Laravel Developer with <strong>2+ years</strong> of experience building scalable, high-performance web applications using Laravel, MySQL, and RESTful APIs. 
+            Comfortable with CI/CD, Git (Bitbucket), and front-end technologies like HTML, CSS, JS and Vue.js. 
+            Strong in problem-solving, effective communication, and cross-functional team collaboration.
+          </p>
+        </section>
+
+        <section class="card" id="skills">
+          <h2>Skills</h2>
+          <div class="item">
+            <div class="title">Backend</div>
+            <ul>
+              <li>Laravel (Fundamentals, Eloquent ORM, Auth, Security)</li>
+              <li>PHP, RESTful APIs, Queues & Jobs, Caching (Redis)</li>
+            </ul>
+          </div>
+          <div class="item">
+            <div class="title">Database</div>
+            <ul>
+              <li>MySQL, SQL, SQLite</li>
+              <li>Database Design & Optimization</li>
+            </ul>
+          </div>
+          <div class="item">
+            <div class="title">Frontend</div>
+            <ul>
+              <li>JavaScript, jQuery, HTML5, CSS3</li>
+              <li>Bootstrap, Vue.js, AJAX</li>
+            </ul>
+          </div>
+          <div class="item">
+            <div class="title">Tools & DevOps</div>
+            <ul>
+              <li>Git, GitHub, Bitbucket</li>
+              <li>CI/CD, Docker, Postman</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="card" id="languages">
+          <h2>Languages</h2>
+          <ul>
+            <li>English — Advanced Proficiency</li>
+            <li>Spanish — Intermediate</li>
+            <li>Bengali — Native</li>
+          </ul>
+        </section>
+
+        <section class="card" id="certs">
+          <h2>Certifications</h2>
+          <ul>
+            <li>Google Analytics Certification</li>
+            <li>Facebook Blueprint Certification</li>
+            <li>Laravel Advanced Certification</li>
+          </ul>
+        </section>
+      </aside>
+
+      <!-- Main content -->
+      <div>
+        <section class="card" id="experience">
+          <h2>Work Experience</h2>
+
+          <div class="item">
+            <div class="topline">
+              <div class="title">Backend Developer (Laravel)</div>
+              <div class="meta">The Tork Inc. — Dhaka, Bangladesh</div>
+              <div class="meta">Oct 2024 – Present</div>
+            </div>
+            <ul>
+              <li>Architect and develop high-performance CMS/LMS applications using Laravel, leveraging Eloquent ORM and Blade Engineering</li>
+              <li>Design, implement, and enhance RESTful APIs, ensuring efficient communication between backend, frontend, and mobile applications</li>
+              <li>Integrate 3rd party APIs like OAuth, Payment Gateways (Stripe, PayPal) for enhanced functionality</li>
+              <li>Structure and fine-tune MySQL databases, optimizing queries for high-traffic environments and ensuring data integrity</li>
+              <li>Streamline deployment processes with CI/CD pipelines while maintaining robust version control workflows using Git (Bitbucket)</li>
+              <li>Collaborate with front-end teams, integrating technologies like HTML, CSS, JavaScript, and React to deliver cohesive user experiences</li>
+            </ul>
+            <div class="tags" aria-label="Key technologies">
+              <span class="tag">Laravel</span>
+              <span class="tag">PHP</span>
+              <span class="tag">MySQL</span>
+              <span class="tag">REST APIs</span>
+              <span class="tag">CI/CD</span>
+              <span class="tag">Git</span>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="topline">
+              <div class="title">Junior Web Developer</div>
+              <div class="meta">BugBuild Labs Pvt. — Dhaka, Bangladesh</div>
+              <div class="meta">Apr 2022 – Oct 2024</div>
+            </div>
+            <ul>
+              <li>Developed content management applications including school management systems, logistics platforms, and news portals</li>
+              <li>Built and tested robust RESTful APIs using Laravel, utilizing Postman for efficient API testing</li>
+              <li>Designed databases, wrote optimized queries, and resolved issues to maintain database integrity</li>
+              <li>Updated legacy systems by incorporating advanced features into projects for improved functionality</li>
+              <li>Enhanced application security by following best practices and minimizing code duplication</li>
+              <li>Managed version control with GitHub and collaborated effectively in team environments</li>
+            </ul>
+            <div class="tags">
+              <span class="tag">Laravel</span>
+              <span class="tag">MySQL</span>
+              <span class="tag">Postman</span>
+              <span class="tag">GitHub</span>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="topline">
+              <div class="title">Trainee Web Developer</div>
+              <div class="meta">Creative Sense PLC — Dhaka, Bangladesh</div>
+              <div class="meta">Feb 2021 – Mar 2022</div>
+            </div>
+            <ul>
+              <li>Applied foundational knowledge in HTML5, CSS3, and JavaScript, focusing on responsive design and mobile-friendly development</li>
+              <li>Gained expertise in MVC patterns and Laravel, focusing on building responsive, dynamic applications</li>
+              <li>Managed projects using Git and GitHub, applying knowledge to streamline development processes</li>
+              <li>Conducted client requirement analysis and research to create solutions based on requirements</li>
+            </ul>
+            <div class="tags">
+              <span class="tag">HTML5</span>
+              <span class="tag">CSS3</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">Laravel</span>
+              <span class="tag">Git</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" id="education">
+          <h2>Education</h2>
+          
+          <div class="item">
+            <div class="topline">
+              <div class="title">B.Sc. in Computer Science & Engineering</div>
+              <div class="meta">City College, Dhaka — Bangladesh</div>
+              <div class="meta">2019 – 2023</div>
+            </div>
+            <p><strong>CGPA:</strong> 3.17/4.00</p>
+            <ul>
+              <li>Software Engineering & Development</li>
+              <li>Database Management Systems</li>
+              <li>Web Technologies & API Development</li>
+            </ul>
+          </div>
+
+          <div class="item">
+            <div class="topline">
+              <div class="title">Higher Secondary Certificate (HSC)</div>
+              <div class="meta">Science Background — Bangladesh</div>
+              <div class="meta">2018</div>
+            </div>
+            <p><strong>GPA:</strong> 4.83/5.00</p>
+          </div>
+
+          <div class="item">
+            <div class="topline">
+              <div class="title">Secondary School Certificate (SSC)</div>
+              <div class="meta">Science Background — Bangladesh</div>
+              <div class="meta">2016</div>
+            </div>
+            <p><strong>GPA:</strong> 5.00/5.00</p>
+          </div>
+        </section>
+
+        <section class="card" id="extracurricular">
+          <h2>Extracurricular Activities</h2>
+          
+          <div class="item">
+            <div class="topline">
+              <div class="title">International Student Ambassador</div>
+            </div>
+            <ul>
+              <li>Led campus tours of ~20 students and held talks to promote university programs</li>
+            </ul>
+          </div>
+
+          <div class="item">
+            <div class="topline">
+              <div class="title">Media Secretary</div>
+            </div>
+            <ul>
+              <li>Increased sales of club merchandise by launching strategic promotional offers</li>
+            </ul>
+          </div>
+
+          <div class="item">
+            <div class="topline">
+              <div class="title">Treasurer</div>
+            </div>
+            <ul>
+              <li>Fundraised +£5000 to help fund campus events and activities</li>
+            </ul>
+          </div>
+
+          <div class="item">
+            <div class="topline">
+              <div class="title">Vice President</div>
+            </div>
+            <ul>
+              <li>Led a team of 200 members ensuring 9.5/10 satisfaction score</li>
+            </ul>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
