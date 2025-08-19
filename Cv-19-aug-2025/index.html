@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My CV</title>
+  <style>
+    @page {
+      margin: 1in;
+    }
+
+    body {
+      font-family: "Arial", sans-serif;
+      font-size: 12pt;
+      line-height: 1.5;
+      color: #222;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 0 20px;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-weight: bold;
+      color: #111;
+    }
+
+    h1 {
+      font-size: 22pt;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      font-size: 14pt;
+      margin-top: 20px;
+      border-bottom: 1px solid #aaa;
+      padding-bottom: 3px;
+    }
+
+    h3 {
+      font-size: 12pt;
+      margin-top: 10px;
+    }
+
+    p {
+      margin: 4px 0;
+    }
+
+    ul {
+      margin: 5px 0 10px 20px;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    /* --- HEADER --- */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .header-left {
+      width: 70%;
+    }
+
+    .header-right {
+      width: 25%;
+      text-align: right;
+    }
+
+    .header-right img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid #555;
+    }
+
+    .contact {
+      font-size: 10pt;
+      color: #444;
+      margin-top: 8px;
+    }
+
+    .job-title {
+      font-weight: bold;
+    }
+
+    .meta {
+      font-style: italic;
+      color: #555;
+      font-size: 10.5pt;
+    }
+
+    /* Print optimization */
+    @media print {
+      body {
+        font-size: 11pt;
+      }
+      a {
+        color: black;
+        text-decoration: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <h1>Your Full Name</h1>
+        <div class="contact">
+          Email: your@email.com | Mobile: +123456789 <br>
+          LinkedIn: linkedin.com/in/yourprofile | City, Country
+        </div>
+        <p><strong>Summary:</strong> Highly motivated graduate with a strong academic background and proven experience in [Field]. 
+        Seeking opportunities as a [Target Role]. Eligible to work in the UK.</p>
+      </div>
+      <div class="header-right">
+        <img src="profile.jpg" alt="Profile Photo">
+      </div>
+    </div>
+
+    <!-- Education -->
+    <div class="section">
+      <h2>Education</h2>
+      <p><strong>MSc in Public Policy and Management</strong>, King’s College London (2021–2022)</p>
+      <p class="meta">Relevant Modules: Economics of Public Policy, Research Methods, Services in Marketing</p>
+
+      <p><strong>BA in Arabic and French</strong>, University College London (2017–2021)</p>
+      <p class="meta">Relevant Modules: Arabic & French Literature, Political Economy</p>
+    </div>
+
+    <!-- Work Experience -->
+    <div class="section">
+      <h2>Work Experience</h2>
+      <p><span class="job-title">Sales and Investor Relations Analyst</span>, EDAGlobal | London, UK <span class="meta">(Aug 2023 – Oct 2023)</span></p>
+      <ul>
+        <li>Developed strategic investor targeting initiatives, resulting in a £3.5 million investment.</li>
+        <li>Created and maintained CRM database, tracking over 200 high-value investor relationships.</li>
+        <li>Prepared reports and presentations for senior leadership, driving 20% increase in investor engagement.</li>
+      </ul>
+
+      <p><span class="job-title">Sales and Account Manager</span>, IBS | Mumbai, India <span class="meta">(Sept 2020 – Aug 2022)</span></p>
+      <ul>
+        <li>Achieved 30% increase in revenue by building strong client relationships.</li>
+        <li>Recommended business strategies to reduce stock shortages by 50%.</li>
+      </ul>
+    </div>
+
+    <!-- Extracurricular -->
+    <div class="section">
+      <h2>Extracurricular Activities</h2>
+      <ul>
+        <li>Student Ambassador – led campus tours of 50+ students to promote university programs.</li>
+        <li>Volunteered with local NGOs for youth education and skill development.</li>
+      </ul>
+    </div>
+
+    <!-- Skills & Certifications -->
+    <div class="section">
+      <h2>Languages, Skills & Certifications</h2>
+      <ul>
+        <li>Languages: English (Fluent), French (Intermediate), Arabic (Beginner)</li>
+        <li>Technical: Microsoft Office, Excel, PowerPoint, CRM tools</li>
+        <li>Certifications: Google Analytics Certified, HubSpot Inbound Marketing Certified</li>
+      </ul>
+    </div>
+
+    <p class="meta">References available on request</p>
+
+  </div>
+</body>
+</html>
