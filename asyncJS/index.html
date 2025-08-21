@@ -5,7 +5,7 @@
     <title>Document</title>
 </head>
 <body>
-    <script>
+    <!-- <script>
         // console.log('Asynchronous script On Practice');
 
         const processOrder = (customer) => {
@@ -14,7 +14,7 @@
             var currentTime = new Date().getTime();
            
             // About 7-8 seconds
-            while (currentTime + 10000 >= new Date().getTime());
+            while (currentTime + 3000 >= new Date().getTime());
 
             console.log(`Order processed for ${customer}`);
 
@@ -25,6 +25,29 @@
         console.log('Order Completed for customer1');
 
         
+    </script> -->
+
+    <script>
+        console.log('Time for asynchronous js')
     </script>
+
+
+<script>
+        const processOrder2 = (customer) => {
+            console.log(`processing order for ${customer}`);
+        
+            // About 7-8 seconds
+            setTimeout(() => {
+                console.log(`Cooking Completed !!`);
+            }, 3000)
+
+            console.log(`Order processed for ${customer}`);
+
+        };
+
+        console.log('Start- Take order from customer2 async');
+        processOrder2('customer2 async');
+        console.log('Order Completed for customer2 async');
+</script>
 </body>
 </html>
