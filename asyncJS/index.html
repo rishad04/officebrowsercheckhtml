@@ -1,0 +1,30 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // console.log('Asynchronous script On Practice');
+
+        const processOrder = (customer) => {
+            console.log(`processing order for ${customer}`);
+
+            var currentTime = new Date().getTime();
+           
+            // About 7-8 seconds
+            while (currentTime + 10000 >= new Date().getTime());
+
+            console.log(`Order processed for ${customer}`);
+
+        };
+
+        console.log('Take order from customer1');
+        processOrder('Customer1');
+        console.log('Order Completed for customer1');
+
+        
+    </script>
+</body>
+</html>
