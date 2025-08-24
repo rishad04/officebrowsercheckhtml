@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Section with Background Video</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --accent-color: #3b82f6;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.9);
+            --text-light: rgba(255, 255, 255, 0.7);
+            --overlay-dark: rgba(0, 0, 0, 0.4);
+            --overlay-gradient: linear-gradient(135deg, rgba(37, 99, 235, 0.8), rgba(59, 130, 246, 0.6));
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Background Video Styles */
+        .hero-video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        .hero-video-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* Video Overlay */
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--overlay-gradient);
+            z-index: -1;
+        }
+
+        /* Alternative Pattern Overlay */
+        .hero-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(1deg); }
+            66% { transform: translateY(-10px) rotate(-1deg); }
+        }
+
+        /* Content Container */
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 1200px;
+            padding: 0 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .hero-title .gradient-text {
+            background: linear-gradient(135deg, #ffffff, rgba(255,255,255,0.8));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255,255,255,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 400;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .hero-description {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+
+        /* Action Buttons */
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ffffff, rgba(255,255,255,0.9));
+            color: var(--primary-color);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 32px 64px -12px rgba(0, 0, 0, 0.35);
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-3px);
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            animation: fadeInUp 1s ease-out 1.2s both;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .scroll-arrow {
+            width: 2px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.3);
+            position: relative;
+            border-radius: 2px;
+        }
+
+        .scroll-arrow::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 2px;
+            animation: scrollAnimation 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollAnimation {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(15px); opacity: 0; }
+        }
+
+        /* Video Loading State */
+        .video-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+
+        .video-loading::after {
+            content: '';
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid rgba(255,255,255,0.8);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content {
+                padding: 0 1rem;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+
+            .scroll-indicator {
+                bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-badge {
+                padding: 0.4rem 1rem;
+                font-size: 0.8rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .hero-description {
+                margin-bottom: 2rem;
+            }
+
+            .hero-actions {
+                gap: 1rem;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            .hero-content,
+            .hero-badge,
+            .hero-title,
+            .hero-subtitle,
+            .hero-description,
+            .hero-actions,
+            .scroll-indicator {
+                animation: none;
+            }
+
+            .hero-overlay::before {
+                animation: none;
+            }
+
+            .scroll-arrow::after {
+                animation: none;
+            }
+        }
+
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .hero-overlay {
+                background: rgba(0, 0, 0, 0.8);
+            }
+
+            .btn-outline {
+                border-width: 3px;
+            }
+        }
+
+        /* Performance optimizations */
+        .hero-video-bg video {
+            will-change: auto;
+        }
+
+        .hero-content {
+            will-change: transform, opacity;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero" id="hero">
+        <!-- Background Video -->
+        <div class="hero-video-bg" id="videoBg">
+            <video 
+                autoplay 
+                muted 
+                loop 
+                playsinline 
+                preload="metadata"
+                poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%232563eb'/%3E%3Cstop offset='100%25' stop-color='%233b82f6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1920' height='1080' fill='url(%23bg)'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-family='system-ui' font-size='48' opacity='0.7'%3ECoding Video Background%3C/text%3E%3C/svg%3E"
+                id="heroVideo"
+            >
+                <!-- <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4"> -->
+                <source src="assets/videos/Web_Developer_Intro_Video_Creation.mp4" type="video/mp4">
+                <source src="https://sample-videos.com/zip/10/mp4/1080/mp4-1080.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            
+            <!-- Video Loading Indicator -->
+            <div class="video-loading" id="videoLoading"></div>
+        </div>
+
+        <!-- Gradient Overlay -->
+        <div class="hero-overlay"></div>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <div class="hero-badge">
+                ✨ Available for Freelance Work
+            </div>
+
+            <h1 class="hero-title">
+                <span class="gradient-text">Full Stack</span><br>
+                Developer
+            </h1>
+
+            <p class="hero-subtitle">
+                Building Digital Solutions That Matter
+            </p>
+
+            <p class="hero-description">
+                I'm a passionate full-stack developer with 5+ years of experience creating scalable web applications. 
+                I specialize in React, Node.js, and modern web technologies to deliver exceptional user experiences 
+                that drive business growth.
+            </p>
+
+            <div class="hero-actions">
+                <a href="#contact" class="btn btn-primary">
+                    💬 Let's Talk
+                </a>
+                <a href="#projects" class="btn btn-outline">
+                    🚀 View Projects
+                </a>
+                <a href="https://example.com/resume.pdf" target="_blank" class="btn btn-outline">
+                    📄 Download Resume
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <span>Scroll Down</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <script>
+        class HeroVideoManager {
+            constructor() {
+                this.video = document.getElementById('heroVideo');
+                this.videoContainer = document.getElementById('videoBg');
+                this.loadingIndicator = document.getElementById('videoLoading');
+                this.isVideoLoaded = false;
+                
+                this.init();
+            }
+
+            init() {
+                this.setupVideoEvents();
+                this.setupIntersectionObserver();
+                this.handleVideoErrors();
+            }
+
+            setupVideoEvents() {
+                if (!this.video) return;
+
+                // Video loading events
+                this.video.addEventListener('loadstart', () => {
+                    console.log('Video loading started');
+                });
+
+                this.video.addEventListener('canplay', () => {
+                    this.hideLoadingIndicator();
+                    this.isVideoLoaded = true;
+                    console.log('Video ready to play');
+                });
+
+                this.video.addEventListener('canplaythrough', () => {
+                    this.video.style.opacity = '1';
+                    console.log('Video fully loaded');
+                });
+
+                // Error handling
+                this.video.addEventListener('error', (e) => {
+                    console.warn('Video error:', e);
+                    this.handleVideoError();
+                });
+
+                // Play/pause optimization
+                this.video.addEventListener('play', () => {
+                    console.log('Video playing');
+                });
+
+                this.video.addEventListener('pause', () => {
+                    console.log('Video paused');
+                });
+            }
+
+            setupIntersectionObserver() {
+                if (!this.video) return;
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Video is in viewport, ensure it plays
+                            this.playVideo();
+                        } else {
+                            // Video is out of viewport, pause for performance
+                            this.pauseVideo();
+                        }
+                    });
+                }, {
+                    threshold: 0.1
+                });
+
+                observer.observe(this.video);
+            }
+
+            playVideo() {
+                if (this.video && this.video.paused) {
+                    this.video.play().catch(error => {
+                        console.warn('Video autoplay failed:', error);
+                        // Try with muted audio
+                        this.video.muted = true;
+                        this.video.play().catch(e => {
+                            console.warn('Video play failed even when muted:', e);
+                            this.handleVideoError();
+                        });
+                    });
+                }
+            }
+
+            pauseVideo() {
+                if (this.video && !this.video.paused) {
+                    this.video.pause();
+                }
+            }
+
+            hideLoadingIndicator() {
+                if (this.loadingIndicator) {
+                    this.loadingIndicator.style.opacity = '0';
+                    setTimeout(() => {
+                        this.loadingIndicator.style.display = 'none';
+                    }, 300);
+                }
+            }
+
+            handleVideoError() {
+                console.warn('Video failed to load, switching to fallback');
+                this.hideLoadingIndicator();
+                
+                // Create fallback background
+                this.createFallbackBackground();
+            }
+
+            createFallbackBackground() {
+                if (!this.videoContainer) return;
+
+                const fallback = document.createElement('div');
+                fallback.style.cssText = `
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #1d4ed8 100%);
+                    z-index: -2;
+                `;
+
+                // Add animated particles
+                const particles = document.createElement('div');
+                particles.innerHTML = `
+                    <div style="position: absolute; top: 20%; left: 10%; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%; animation: float 6s ease-in-out infinite;"></div>
+                    <div style="position: absolute; top: 60%; right: 15%; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%; animation: float 8s ease-in-out infinite reverse;"></div>
+                    <div style="position: absolute; bottom: 30%; left: 20%; width: 80px; height: 80px; background: rgba(255,255,255,0.1); border-radius: 50%; animation: float 7s ease-in-out infinite;"></div>
+                `;
+                
+                fallback.appendChild(particles);
+                this.videoContainer.appendChild(fallback);
+
+                // Hide the video element
+                if (this.video) {
+                    this.video.style.display = 'none';
+                }
+            }
+
+            handleVideoErrors() {
+                // Global error handling
+                window.addEventListener('error', (e) => {
+                    if (e.target === this.video) {
+                        this.handleVideoError();
+                    }
+                });
+            }
+        }
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                new HeroVideoManager();
+            });
+        } else {
+            new HeroVideoManager();
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Performance monitoring
+        window.addEventListener('load', () => {
+            const loadTime = performance.now();
+            console.log(`Hero section loaded in ${loadTime.toFixed(2)}ms`);
+        });
+    </script>
+</body>
+</html>
