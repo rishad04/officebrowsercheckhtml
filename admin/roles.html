@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Roles & Permissions</title><link rel="stylesheet" href="styles.css"></head>
+<body>
+  <button class="toggle-btn">☰</button>
+  <div class="sidebar">
+    <ul>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="settings.html">Settings</a></li>
+      <li><a href="roles.html" class="active">Roles & Permissions</a></li>
+      <li><a href="index.html">Logout</a></li>
+    </ul>
+  </div>
+  <div class="main">
+    <h2>Roles & Permissions</h2>
+    <form onsubmit="event.preventDefault(); alert('Roles Saved');">
+      <div class="form-group"><label>Role Name</label><input type="text" required></div>
+      <div class="form-group"><label>Permissions</label>
+        <select multiple size="5">
+          <option>Create</option><option>Read</option><option>Update</option><option>Delete</option><option>Manage Users</option>
+        </select>
+      </div>
+      <button type="submit">Save Role</button>
+    </form>
+  </div>
+  <script src="scripts.js"></script>
+</body>
+</html>

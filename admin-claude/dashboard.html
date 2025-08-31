@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-brand">AdminPanel</div>
+                <button class="sidebar-toggle">☰</button>
+            </div>
+            
+            <nav>
+                <ul class="sidebar-nav">
+                    <li class="nav-item">
+                        <a href="dashboard.html" class="nav-link active">
+                            <span class="nav-icon">📊</span>
+                            <span class="nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="forms.html" class="nav-link">
+                            <span class="nav-icon">📝</span>
+                            <span class="nav-text">Forms</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <span class="nav-icon">👥</span>
+                            <span class="nav-text">Users</span>
+                        </a>
+                        <ul class="nav-submenu">
+                            <li><a href="#" class="nav-link">All Users</a></li>
+                            <li><a href="permissions.html" class="nav-link">Permissions</a></li>
+                            <li><a href="#" class="nav-link">Roles</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="settings.html" class="nav-link">
+                            <span class="nav-icon">⚙️</span>
+                            <span class="nav-text">Settings</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon">📈</span>
+                            <span class="nav-text">Analytics</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon">💬</span>
+                            <span class="nav-text">Messages</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="main-header">
+                <h1 class="header-title">Dashboard</h1>
+                <div class="header-actions">
+                    <div class="user-profile" onclick="logout()">
+                        <div class="user-avatar">JD</div>
+                        <span>John Doe</span>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="content-area">
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue">👥</div>
+                        <div class="stat-content">
+                            <h3>1,234</h3>
+                            <p>Total Users</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon green">💰</div>
+                        <div class="stat-content">
+                            <h3>$12,345</h3>
+                            <p>Revenue</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon orange">📦</div>
+                        <div class="stat-content">
+                            <h3>567</h3>
+                            <p>Orders</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon red">⚠️</div>
+                        <div class="stat-content">
+                            <h3>12</h3>
+                            <p>Issues</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dashboard Grid -->
+                <div class="dashboard-grid">
+                    <!-- Charts Section -->
+                    <div class="chart-container">
+                        <h3 style="margin-bottom: 1rem; color: #333;">Weekly Analytics</h3>
+                        <canvas id="lineChart" style="width: 100%; height: 300px;"></canvas>
+                    </div>
+                    
+                    <!-- Calendar Widget -->
+                    <div class="calendar-widget">
+                        <div class="calendar-header">
+                            <button class="calendar-nav" onclick="changeMonth('prev')">‹</button>
+                            <h3 class="calendar-month-year">August 2025</h3>
+                            <button class="calendar-nav" onclick="changeMonth('next')">›</button>
+                        </div>
+                        <div class="calendar-grid"></div>
+                    </div>
+                </div>
+                
+                <!-- Additional Chart -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Monthly Performance</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="barChart" style="width: 100%; height: 200px;"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Recent Activity -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Recent Activity</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Action</th>
+                                        <th>Time</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>John Doe</td>
+                                        <td>Updated profile</td>
+                                        <td>2 mins ago</td>
+                                        <td><span style="color: #28a745;">✓ Success</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jane Smith</td>
+                                        <td>Created new post</td>
+                                        <td>5 mins ago</td>
+                                        <td><span style="color: #28a745;">✓ Success</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mike Johnson</td>
+                                        <td>Failed login attempt</td>
+                                        <td>10 mins ago</td>
+                                        <td><span style="color: #dc3545;">✗ Failed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sarah Wilson</td>
+                                        <td>Uploaded file</td>
+                                        <td>15 mins ago</td>
+                                        <td><span style="color: #28a745;">✓ Success</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

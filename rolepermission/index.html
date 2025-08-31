@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role Permissions Management</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.0/cdn.min.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                        <i class="fas fa-user-shield text-blue-600 mr-3"></i>
+                        Admin Role Permissions
+                    </h1>
+                    <p class="text-gray-600">Manage permissions by module</p>
+                </div>
+                <div class="text-right">
+                    <div class="bg-blue-50 rounded-lg px-4 py-2 border border-blue-200">
+                        <span class="text-sm text-blue-600">Active Permissions</span>
+                        <div class="text-2xl font-bold text-blue-800" x-data x-text="$store.permissions.activeCount">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Permissions Table -->
+        <div x-data="permissionsManager()" class="bg-white rounded-lg shadow-md overflow-hidden">
+            <!-- Global Actions -->
+            <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800">Permission Modules</h3>
+                    <div class="flex gap-3">
+                        <button 
+                            @click="toggleAllModules(true)"
+                            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2 text-sm"
+                        >
+                            <i class="fas fa-check-double"></i>
+                            Grant All Permissions
+                        </button>
+                        <button 
+                            @click="toggleAllModules(false)"
+                            class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2 text-sm"
+                        >
+                            <i class="fas fa-times-circle"></i>
+                            Remove All Permissions
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Permissions by Module -->
+            <div class="divide-y divide-gray-200">
+                <template x-for="module in modules" :key="module.name">
+                    <div class="p-6">
+                        <!-- Module Header -->
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center">
+                                    <i :class="module.icon"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-800" x-text="module.name"></h3>
+                                    <p class="text-sm text-gray-500" x-text="module.description"></p>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button 
+                                    @click="toggleModulePermissions(module.name, true)"
+                                    class="bg-green-100 hover:bg-green-200 text-green-700 px-3 py-1 rounded text-sm font-medium transition-colors duration-200"
+                                >
+                                    Check All
+                                </button>
+                                <button 
+                                    @click="toggleModulePermissions(module.name, false)"
+                                    class="bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded text-sm font-medium transition-colors duration-200"
+                                >
+                                    Uncheck All
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Permission Toggles -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <template x-for="permission in getModulePermissions(module.name)" :key="permission.id">
+                                <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm"
+                                             :class="permission.enabled ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'">
+                                            <i :class="getPermissionIcon(permission.action)"></i>
+                                        </div>
+                                        <div>
+                                            <span class="font-medium text-gray-800 capitalize" x-text="permission.action"></span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Toggle Switch -->
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input 
+                                            type="checkbox" 
+                                            :checked="permission.enabled"
+                                            @change="togglePermission(permission.id)"
+                                            class="sr-only peer"
+                                        >
+                                        <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+                                    </label>
+                                </div>
+                            </template>
+                        </div>
+
+                        <!-- Module Status -->
+                        <div class="mt-4 flex items-center justify-between text-sm">
+                            <div class="flex items-center gap-4">
+                                <span class="text-gray-600">
+                                    Enabled: <span class="font-semibold text-green-600" x-text="getModuleEnabledCount(module.name)"></span>
+                                </span>
+                                <span class="text-gray-600">
+                                    Total: <span class="font-semibold" x-text="getModulePermissions(module.name).length"></span>
+                                </span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-24 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" 
+                                         :style="`width: ${(getModuleEnabledCount(module.name) / getModulePermissions(module.name).length) * 100}%`"></div>
+                                </div>
+                                <span class="text-xs text-gray-500" x-text="`${Math.round((getModuleEnabledCount(module.name) / getModulePermissions(module.name).length) * 100)}%`"></span>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Save Changes Footer -->
+            <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
+                <div class="flex items-center justify-between">
+                    <div class="text-sm text-gray-600">
+                        <span x-show="hasChanges" class="text-orange-600">
+                            <i class="fas fa-exclamation-triangle mr-1"></i>
+                            You have unsaved changes
+                        </span>
+                        <span x-show="!hasChanges" class="text-green-600">
+                            <i class="fas fa-check-circle mr-1"></i>
+                            All changes saved
+                        </span>
+                    </div>
+                    <div class="flex gap-3">
+                        <button 
+                            @click="resetChanges()"
+                            x-show="hasChanges"
+                            class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg transition-colors duration-200"
+                        >
+                            Reset
+                        </button>
+                        <button 
+                            @click="saveChanges()"
+                            :disabled="!hasChanges"
+                            :class="hasChanges ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'"
+                            class="text-white px-6 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2"
+                        >
+                            <i class="fas fa-save"></i>
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success/Error Messages -->
+        <div x-show="showMessage" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 transform translate-y-2"
+             x-transition:enter-end="opacity-100 transform translate-y-0"
+             class="fixed bottom-4 right-4 z-50">
+            <div :class="messageType === 'success' ? 'bg-green-600' : 'bg-red-600'" 
+                 class="text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-3">
+                <i :class="messageType === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle'"></i>
+                <span x-text="messageText"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global Alpine store for permission count
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('permissions', {
+                activeCount: 0
+            });
+        });
+
+        function permissionsManager() {
+            return {
+                permissions: [
+                    // User Management
+                    { id: 1, module: 'User Management', action: 'view', enabled: true },
+                    { id: 2, module: 'User Management', action: 'create', enabled: true },
+                    { id: 3, module: 'User Management', action: 'update', enabled: false },
+                    { id: 4, module: 'User Management', action: 'delete', enabled: false },
+                    
+                    // Content Management
+                    { id: 5, module: 'Content Management', action: 'view', enabled: true },
+                    { id: 6, module: 'Content Management', action: 'create', enabled: true },
+                    { id: 7, module: 'Content Management', action: 'update', enabled: true },
+                    { id: 8, module: 'Content Management', action: 'delete', enabled: false },
+                    
+                    // HRM
+                    { id: 9, module: 'HRM', action: 'view', enabled: true },
+                    { id: 10, module: 'HRM', action: 'create', enabled: false },
+                    { id: 11, module: 'HRM', action: 'update', enabled: false },
+                    { id: 12, module: 'HRM', action: 'delete', enabled: false },
+                    
+                    // Reports
+                    { id: 13, module: 'Reports', action: 'view', enabled: true },
+                    { id: 14, module: 'Reports', action: 'create', enabled: false },
+                    { id: 15, module: 'Reports', action: 'update', enabled: false },
+                    { id: 16, module: 'Reports', action: 'delete', enabled: false },
+                    
+                    // Settings
+                    { id: 17, module: 'Settings', action: 'view', enabled: true },
+                    { id: 18, module: 'Settings', action: 'create', enabled: false },
+                    { id: 19, module: 'Settings', action: 'update', enabled: false },
+                    { id: 20, module: 'Settings', action: 'delete', enabled: false },
+                ],
+                originalPermissions: [],
+                showMessage: false,
+                messageText: '',
+                messageType: 'success',
+
+                modules: [
+                    { name: 'User Management', icon: 'fas fa-users', description: 'Manage user accounts and profiles' },
+                    { name: 'Content Management', icon: 'fas fa-file-alt', description: 'Handle posts, pages, and media' },
+                    { name: 'HRM', icon: 'fas fa-briefcase', description: 'Human Resource Management' },
+                    { name: 'Reports', icon: 'fas fa-chart-bar', description: 'Analytics and reporting tools' },
+                    { name: 'Settings', icon: 'fas fa-cogs', description: 'System configuration and settings' }
+                ],
+
+                init() {
+                    this.originalPermissions = JSON.parse(JSON.stringify(this.permissions));
+                    this.updateActiveCount();
+                },
+
+                get hasChanges() {
+                    return JSON.stringify(this.permissions) !== JSON.stringify(this.originalPermissions);
+                },
+
+                getModulePermissions(moduleName) {
+                    return this.permissions.filter(p => p.module === moduleName);
+                },
+
+                getModuleEnabledCount(moduleName) {
+                    return this.permissions.filter(p => p.module === moduleName && p.enabled).length;
+                },
+
+                getPermissionIcon(action) {
+                    const icons = {
+                        'view': 'fas fa-eye',
+                        'create': 'fas fa-plus',
+                        'update': 'fas fa-edit',
+                        'delete': 'fas fa-trash'
+                    };
+                    return icons[action] || 'fas fa-key';
+                },
+
+                togglePermission(permissionId) {
+                    const permission = this.permissions.find(p => p.id === permissionId);
+                    if (permission) {
+                        permission.enabled = !permission.enabled;
+                        this.updateActiveCount();
+                    }
+                },
+
+                toggleModulePermissions(moduleName, enable) {
+                    this.permissions.forEach(permission => {
+                        if (permission.module === moduleName) {
+                            permission.enabled = enable;
+                        }
+                    });
+                    this.updateActiveCount();
+                    
+                    this.showToast(
+                        `${moduleName} permissions ${enable ? 'enabled' : 'disabled'}`,
+                        'success'
+                    );
+                },
+
+                toggleAllModules(enable) {
+                    this.permissions.forEach(permission => {
+                        permission.enabled = enable;
+                    });
+                    this.updateActiveCount();
+                    
+                    this.showToast(
+                        enable ? 'All permissions granted' : 'All permissions removed',
+                        'success'
+                    );
+                },
+
+                updateActiveCount() {
+                    this.$store.permissions.activeCount = this.permissions.filter(p => p.enabled).length;
+                },
+
+                saveChanges() {
+                    const enabledPermissions = this.permissions
+                        .filter(p => p.enabled)
+                        .map(p => p.id);
+
+                    // Laravel API call would go here:
+                    // fetch('/admin/roles/admin/permissions', {
+                    //     method: 'PUT',
+                    //     headers: {
+                    //         'Content-Type': 'application/json',
+                    //         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    //     },
+                    //     body: JSON.stringify({ permissions: enabledPermissions })
+                    // })
+
+                    setTimeout(() => {
+                        this.originalPermissions = JSON.parse(JSON.stringify(this.permissions));
+                        this.showToast('Permissions saved successfully!', 'success');
+                        
+                        console.log('Laravel payload:', {
+                            role: 'admin',
+                            permissions: enabledPermissions
+                        });
+                    }, 500);
+                },
+
+                resetChanges() {
+                    this.permissions = JSON.parse(JSON.stringify(this.originalPermissions));
+                    this.updateActiveCount();
+                    this.showToast('Changes reset', 'success');
+                },
+
+                showToast(message, type = 'success') {
+                    this.messageText = message;
+                    this.messageType = type;
+                    this.showMessage = true;
+                    
+                    setTimeout(() => {
+                        this.showMessage = false;
+                    }, 3000);
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .peer:checked + div {
+            background-color: #2563eb;
+        }
+        
+        * {
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</body>
+</html>

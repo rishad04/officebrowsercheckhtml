@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #333;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .active-link {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .active-link svg {
+            color: white;
+        }
+
+        .sidebar-menu-item:hover {
+            background-color: #d1d5db;
+        }
+
+        .multiselect-container {
+            position: relative;
+        }
+
+        .multiselect-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        /* Custom scrollbar for multi-select dropdown */
+        .multiselect-dropdown::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .multiselect-dropdown::-webkit-scrollbar-thumb {
+            background-color: #d1d5db;
+            border-radius: 4px;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background-color: #e5e7eb;
+            color: #4b5563;
+            border-radius: 9999px;
+            padding: 0.25rem 0.75rem;
+            display: flex;
+            align-items: center;
+            font-size: 0.875rem;
+        }
+
+        .tag-remove {
+            margin-left: 0.5rem;
+            cursor: pointer;
+            color: #6b7280;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .tag-remove:hover {
+            color: #ef4444;
+        }
+
+        .form-error {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .collapsible-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+
+        .collapsible-menu.active {
+            max-height: 500px; /* A large value to accommodate content */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- Auth Pages Container -->
+    <div id="auth-pages" class="w-full h-screen flex items-center justify-center">
+        <!-- Login Page -->
+        <div id="login-page" class="page bg-white p-8 rounded-xl shadow-lg w-full max-w-sm">
+            <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
+            <form id="login-form">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-semibold mb-2" for="login-email">Email</label>
+                    <input class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" id="login-email" type="email" placeholder="email@example.com">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-semibold mb-2" for="login-password">Password</label>
+                    <input class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" id="login-password" type="password" placeholder="••••••••">
+                </div>
+                <button class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors" type="submit">Log In</button>
+            </form>
+            <div class="mt-4 text-center">
+                <p class="text-sm text-gray-600">Don't have an account? <a href="#" id="show-register" class="text-blue-500 hover:text-blue-600 font-semibold">Register now</a></p>
+            </div>
+        </div>
+
+        <!-- Register Page -->
+        <div id="register-page" class="page bg-white p-8 rounded-xl shadow-lg w-full max-w-sm">
+            <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Register</h2>
+            <form id="register-form">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-semibold mb-2" for="register-email">Email</label>
+                    <input class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" id="register-email" type="email" placeholder="email@example.com">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-semibold mb-2" for="register-password">Password</label>
+                    <input class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" id="register-password" type="password" placeholder="••••••••">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-semibold mb-2" for="confirm-password">Confirm Password</label>
+                    <input class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" id="confirm-password" type="password" placeholder="••••••••">
+                </div>
+                <button class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors" type="submit">Register</button>
+            </form>
+            <div class="mt-4 text-center">
+                <p class="text-sm text-gray-600">Already have an account? <a href="#" id="show-login" class="text-blue-500 hover:text-blue-600 font-semibold">Log in</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main App Container -->
+    <div id="app-container" class="hidden min-h-screen">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="bg-white text-gray-700 shadow-md p-4 transition-all duration-300 ease-in-out fixed top-0 bottom-0 z-20 w-64 lg:w-72 -translate-x-full lg:translate-x-0">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-blue-600">Admin Panel</h1>
+            </div>
+            <nav>
+                <a href="#" data-page="dashboard-page" class="sidebar-menu-item flex items-center p-2 rounded-xl text-gray-600 font-medium hover:bg-gray-200 transition-colors mb-2">
+                    <svg class="w-5 h-5 mr-3 text-gray-500 transition-colors" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                    Dashboard
+                </a>
+
+                <div class="mb-2">
+                    <button class="flex items-center justify-between w-full p-2 rounded-xl text-gray-600 font-medium hover:bg-gray-200 transition-colors" onclick="toggleCollapsible(this)">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 mr-3 text-gray-500 transition-colors" fill="currentColor" viewBox="0 0 20 20"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM6 11a1 1 0 100 2h8a1 1 0 100-2H6zM7 15a1 1 0 100 2h6a1 1 0 100-2H7z"></path></svg>
+                            Forms
+                        </div>
+                        <svg class="w-4 h-4 transform transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="collapsible-menu pl-4 mt-1">
+                        <a href="#" data-page="form-elements-page" class="sidebar-menu-item block p-2 rounded-xl text-gray-600 font-medium hover:bg-gray-200 transition-colors">Form Elements</a>
+                    </div>
+                </div>
+
+                <a href="#" data-page="settings-page" class="sidebar-menu-item flex items-center p-2 rounded-xl text-gray-600 font-medium hover:bg-gray-200 transition-colors mb-2">
+                    <svg class="w-5 h-5 mr-3 text-gray-500 transition-colors" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zM5.555 13.974l-1.34-1.34a1 1 0 011.414-1.414l1.34 1.34a1 1 0 01-1.414 1.414zM14.445 6.026l1.34 1.34a1 1 0 01-1.414 1.414l-1.34-1.34a1 1 0 011.414-1.414zM10 12a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+                    Settings
+                </a>
+                <a href="#" data-page="permissions-page" class="sidebar-menu-item flex items-center p-2 rounded-xl text-gray-600 font-medium hover:bg-gray-200 transition-colors mb-2">
+                    <svg class="w-5 h-5 mr-3 text-gray-500 transition-colors" fill="currentColor" viewBox="0 0 0 20"><path d="M12 14v1a2 2 0 01-2 2H8a2 2 0 01-2-2v-1m6-4v1a2 2 0 01-2 2h-2a2 2 0 01-2-2v-1m6-4v1a2 2 0 01-2 2H8a2 2 0 01-2-2v-1"></path></svg>
+                    Roles & Permissions
+                </a>
+                <button id="logout-btn" class="sidebar-menu-item flex items-center w-full p-2 rounded-xl text-red-500 font-medium hover:bg-red-100 transition-colors mb-2 mt-4">
+                    <svg class="w-5 h-5 mr-3 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path d="M5.5 10a.5.5 0 01.5-.5h6.5a.5.5 0 010 1H6a.5.5 0 01-.5-.5z"></path></svg>
+                    Logout
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="lg:ml-72 p-4 transition-all duration-300 ease-in-out">
+            <header class="flex justify-between items-center mb-6">
+                <button id="sidebar-toggle" class="lg:hidden p-2 rounded-full bg-white shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </header>
+
+            <!-- Page Views -->
+            <div id="dashboard-page" class="page p-6 bg-white rounded-xl shadow-lg">
+                <h1 class="text-3xl font-bold text-gray-800 mb-6">Dashboard</h1>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-blue-500 text-white p-6 rounded-xl shadow-md">
+                        <h3 class="text-lg font-semibold mb-2">Total Sales</h3>
+                        <p class="text-3xl font-bold">$12,500</p>
+                    </div>
+                    <div class="bg-green-500 text-white p-6 rounded-xl shadow-md">
+                        <h3 class="text-lg font-semibold mb-2">New Users</h3>
+                        <p class="text-3xl font-bold">450</p>
+                    </div>
+                    <div class="bg-yellow-500 text-white p-6 rounded-xl shadow-md">
+                        <h3 class="text-lg font-semibold mb-2">Active Products</h3>
+                        <p class="text-3xl font-bold">120</p>
+                    </div>
+                    <div class="bg-red-500 text-white p-6 rounded-xl shadow-md">
+                        <h3 class="text-lg font-semibold mb-2">Support Tickets</h3>
+                        <p class="text-3xl font-bold">15</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg">
+                        <h2 class="text-xl font-bold mb-4">Sales Analytics</h2>
+                        <canvas id="salesChart" class="w-full h-64"></canvas>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h2 class="text-xl font-bold mb-4">Calendar</h2>
+                        <div id="calendar" class="text-center"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="form-elements-page" class="page p-6 bg-white rounded-xl shadow-lg">
+                <h1 class="text-3xl font-bold text-gray-800 mb-6">Form Elements</h1>
+                <form id="sample-form">
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-2" for="name">Name</label>
+                        <input class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" id="name" type="text" placeholder="John Doe">
+                        <p class="form-error hidden" id="name-error">Name is required.</p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-2" for="select-item">Select Item</label>
+                        <select class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" id="select-item">
+                            <option value="">Choose an option</option>
+                            <option value="item1">Item 1</option>
+                            <option value="item2">Item 2</option>
+                            <option value="item3">Item 3</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-2" for="multiselect">Multi-select</label>
+                        <div class="multiselect-container">
+                            <div class="relative">
+                                <button type="button" class="w-full text-left px-4 py-2 border border-gray-300 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" id="multiselect-toggle">
+                                    <span id="multiselect-label">Select multiple items</span>
+                                </button>
+                                <div id="multiselect-dropdown" class="multiselect-dropdown mt-1 rounded-xl shadow-lg border border-gray-200 p-2">
+                                    <label class="flex items-center p-2 rounded-md hover:bg-gray-100 cursor-pointer">
+                                        <input type="checkbox" class="form-checkbox text-blue-500 rounded-sm" value="option1">
+                                        <span class="ml-2 text-gray-700">Option 1</span>
+                                    </label>
+                                    <label class="flex items-center p-2 rounded-md hover:bg-gray-100 cursor-pointer">
+                                        <input type="checkbox" class="form-checkbox text-blue-500 rounded-sm" value="option2">
+                                        <span class="ml-2 text-gray-700">Option 2</span>
+                                    </label>
+                                    <label class="flex items-center p-2 rounded-md hover:bg-gray-100 cursor-pointer">
+                                        <input type="checkbox" class="form-checkbox text-blue-500 rounded-sm" value="option3">
+                                        <span class="ml-2 text-gray-700">Option 3</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-2" for="tags-input">Tags</label>
+                        <div class="w-full px-2 py-2 border border-gray-300 rounded-xl bg-white focus-within:ring-2 focus-within:ring-blue-500">
+                            <div id="tags-container" class="tag-container mb-2"></div>
+                            <input class="w-full px-2 py-1 bg-transparent focus:outline-none" id="tags-input" type="text" placeholder="Type a tag and press Enter">
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-2" for="file-uploader">Single File Uploader</label>
+                        <input class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" id="file-uploader" type="file">
+                        <div id="file-preview" class="mt-4 text-center hidden">
+                            <p class="text-sm text-gray-500">Selected file:</p>
+                            <span id="file-name" class="font-medium text-gray-700"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-2" for="multi-file-uploader">Multi File Uploader</label>
+                        <input class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" id="multi-file-uploader" type="file" multiple>
+                        <div id="multi-file-preview" class="mt-4 text-sm text-gray-500"></div>
+                    </div>
+
+                    <div class="flex space-x-4 mt-6">
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-xl transition-colors">Submit</button>
+                        <button type="reset" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-xl transition-colors">Reset</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="settings-page" class="page p-6 bg-white rounded-xl shadow-lg">
+                <h1 class="text-3xl font-bold text-gray-800 mb-6">Settings</h1>
+                <p class="text-gray-600">This is the settings page. You can manage your profile, notifications, and other account settings here.</p>
+                <!-- Add more settings fields here -->
+            </div>
+
+            <div id="permissions-page" class="page p-6 bg-white rounded-xl shadow-lg">
+                <h1 class="text-3xl font-bold text-gray-800 mb-6">Roles & Permissions</h1>
+                <p class="text-gray-600">This is the roles and permissions management page. Here you can define user roles and grant specific permissions.</p>
+                <!-- Add tables for roles and permissions here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Custom Modal for Alerts -->
+    <div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center">
+            <p id="modal-message" class="text-lg font-semibold text-gray-800 mb-4"></p>
+            <button id="modal-ok-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-xl focus:outline-none">OK</button>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // State management
+            const appState = {
+                isAuthenticated: false,
+                currentPage: 'login-page'
+            };
+
+            const pages = {
+                login: document.getElementById('login-page'),
+                register: document.getElementById('register-page'),
+                dashboard: document.getElementById('dashboard-page'),
+                forms: document.getElementById('form-elements-page'),
+                settings: document.getElementById('settings-page'),
+                permissions: document.getElementById('permissions-page'),
+            };
+
+            const authPagesContainer = document.getElementById('auth-pages');
+            const appContainer = document.getElementById('app-container');
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const menuLinks = document.querySelectorAll('.sidebar-menu-item');
+            const collapsibleButtons = document.querySelectorAll('.collapsible-menu');
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const logoutBtn = document.getElementById('logout-btn');
+            const showRegisterBtn = document.getElementById('show-register');
+            const showLoginBtn = document.getElementById('show-login');
+            
+            // Custom modal elements
+            const modal = document.getElementById('modal');
+            const modalMessage = document.getElementById('modal-message');
+            const modalOkBtn = document.getElementById('modal-ok-btn');
+            
+            // Function to show a custom modal instead of alert
+            const showCustomModal = (message) => {
+                modalMessage.textContent = message;
+                modal.classList.remove('hidden');
+            };
+            
+            modalOkBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+
+
+            // --- Page Routing & Auth Logic ---
+            const showPage = (pageId) => {
+                // Hide all main content pages
+                Object.values(pages).forEach(page => page.style.display = 'none');
+                
+                // Show the requested page
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    targetPage.style.display = 'block';
+                    appState.currentPage = pageId;
+
+                    // Update active link in sidebar
+                    menuLinks.forEach(link => {
+                        link.classList.remove('active-link');
+                        if (link.dataset.page === pageId) {
+                            link.classList.add('active-link');
+                        }
+                    });
+                }
+            };
+
+            const renderAppView = () => {
+                if (appState.isAuthenticated) {
+                    authPagesContainer.classList.add('hidden');
+                    appContainer.classList.remove('hidden');
+                    showPage('dashboard-page');
+                } else {
+                    authPagesContainer.classList.remove('hidden');
+                    appContainer.classList.add('hidden');
+                    showPage('login-page');
+                }
+            };
+
+            // Login & Register form submission
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                
+                if (email === 'admin@example.com' && password === 'password') {
+                    appState.isAuthenticated = true;
+                    renderAppView();
+                } else {
+                    showCustomModal('Invalid credentials. Use admin@example.com / password');
+                }
+            });
+
+            registerForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('register-email').value;
+                const password = document.getElementById('register-password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+                
+                if (password !== confirmPassword) {
+                    showCustomModal('Passwords do not match.');
+                    return;
+                }
+                
+                showCustomModal('Registration successful! Please log in.');
+                showPage('login-page');
+            });
+            
+            // Logout
+            logoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                appState.isAuthenticated = false;
+                renderAppView();
+            });
+
+            // Switch between login and register pages
+            showRegisterBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage('register-page');
+            });
+
+            showLoginBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage('login-page');
+            });
+
+            // Sidebar and navigation
+            sidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+            });
+            
+            menuLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageId = link.dataset.page;
+                    showPage(pageId);
+                    // Hide sidebar on mobile after clicking
+                    if (window.innerWidth < 1024) {
+                        sidebar.classList.add('-translate-x-full');
+                    }
+                });
+            });
+
+            const toggleCollapsible = (button) => {
+                const icon = button.querySelector('svg:last-child');
+                const menu = button.nextElementSibling;
+                const isActive = menu.classList.toggle('active');
+                if (isActive) {
+                    icon.style.transform = 'rotate(180deg)';
+                } else {
+                    icon.style.transform = 'rotate(0deg)';
+                }
+            };
+            
+            // Initial render
+            renderAppView();
+
+            // --- Form Elements Logic ---
+            
+            // Multiselect
+            const multiselectToggle = document.getElementById('multiselect-toggle');
+            const multiselectDropdown = document.getElementById('multiselect-dropdown');
+            const multiselectLabel = document.getElementById('multiselect-label');
+            const multiselectCheckboxes = multiselectDropdown.querySelectorAll('input[type="checkbox"]');
+
+            multiselectToggle.addEventListener('click', () => {
+                multiselectDropdown.style.display = multiselectDropdown.style.display === 'block' ? 'none' : 'block';
+            });
+
+            multiselectCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    const selectedOptions = Array.from(multiselectCheckboxes)
+                                              .filter(cb => cb.checked)
+                                              .map(cb => cb.value);
+                    if (selectedOptions.length > 0) {
+                        multiselectLabel.textContent = selectedOptions.join(', ');
+                    } else {
+                        multiselectLabel.textContent = 'Select multiple items';
+                    }
+                });
+            });
+
+            // Tags input
+            const tagsInput = document.getElementById('tags-input');
+            const tagsContainer = document.getElementById('tags-container');
+
+            tagsInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && tagsInput.value.trim() !== '') {
+                    e.preventDefault();
+                    const tagValue = tagsInput.value.trim();
+                    createTag(tagValue);
+                    tagsInput.value = '';
+                }
+            });
+
+            const createTag = (value) => {
+                const tagElement = document.createElement('span');
+                tagElement.className = 'tag';
+                tagElement.innerHTML = `
+                    <span>${value}</span>
+                    <svg class="tag-remove w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                `;
+                tagsContainer.appendChild(tagElement);
+                
+                tagElement.querySelector('.tag-remove').addEventListener('click', () => {
+                    tagsContainer.removeChild(tagElement);
+                });
+            };
+
+            // File uploaders
+            const singleFileUploader = document.getElementById('file-uploader');
+            const filePreview = document.getElementById('file-preview');
+            const fileNameSpan = document.getElementById('file-name');
+
+            singleFileUploader.addEventListener('change', () => {
+                if (singleFileUploader.files.length > 0) {
+                    const file = singleFileUploader.files[0];
+                    fileNameSpan.textContent = file.name;
+                    filePreview.classList.remove('hidden');
+                } else {
+                    filePreview.classList.add('hidden');
+                }
+            });
+
+            const multiFileUploader = document.getElementById('multi-file-uploader');
+            const multiFilePreview = document.getElementById('multi-file-preview');
+
+            multiFileUploader.addEventListener('change', () => {
+                multiFilePreview.innerHTML = '';
+                if (multiFileUploader.files.length > 0) {
+                    Array.from(multiFileUploader.files).forEach(file => {
+                        const fileItem = document.createElement('p');
+                        fileItem.textContent = file.name;
+                        multiFilePreview.appendChild(fileItem);
+                    });
+                }
+            });
+            
+            // Form validation
+            const sampleForm = document.getElementById('sample-form');
+            sampleForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                let isValid = true;
+                
+                const nameInput = document.getElementById('name');
+                const nameError = document.getElementById('name-error');
+                
+                if (nameInput.value.trim() === '') {
+                    nameError.classList.remove('hidden');
+                    nameInput.classList.add('border-red-500');
+                    isValid = false;
+                } else {
+                    nameError.classList.add('hidden');
+                    nameInput.classList.remove('border-red-500');
+                }
+                
+                if (isValid) {
+                    showCustomModal('Form submitted successfully!');
+                    // You would typically handle form data submission here
+                }
+            });
+
+            // --- Dashboard Logic ---
+            
+            // Calendar
+            const calendarEl = document.getElementById('calendar');
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = today.getMonth();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0 for Sunday, 1 for Monday...
+
+            const renderCalendar = () => {
+                const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                let calendarHTML = `
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xl font-bold">${monthNames[month]} ${year}</span>
+                    </div>
+                    <div class="grid grid-cols-7 text-sm font-medium text-gray-500 mb-2">
+                        <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1">
+                `;
+
+                for (let i = 0; i < firstDayOfMonth; i++) {
+                    calendarHTML += `<div class="w-10 h-10"></div>`;
+                }
+
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const isToday = i === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+                    calendarHTML += `<div class="w-10 h-10 flex items-center justify-center rounded-full ${isToday ? 'bg-blue-500 text-white shadow-lg' : ''}">${i}</div>`;
+                }
+                
+                calendarHTML += `</div>`;
+                calendarEl.innerHTML = calendarHTML;
+            };
+            
+            renderCalendar();
+
+            // Simple Chart rendering
+            const salesCanvas = document.getElementById('salesChart');
+            const salesCtx = salesCanvas.getContext('2d');
+            
+            const salesData = [1000, 1500, 2000, 1800, 2500, 2200, 3000];
+            const maxSales = Math.max(...salesData);
+            
+            const drawChart = () => {
+                const width = salesCanvas.width;
+                const height = salesCanvas.height;
+                salesCtx.clearRect(0, 0, width, height);
+
+                const barWidth = width / salesData.length * 0.8;
+                const barSpacing = width / salesData.length * 0.2;
+                
+                salesCtx.fillStyle = '#60a5fa';
+                salesData.forEach((value, index) => {
+                    const barHeight = (value / maxSales) * height * 0.8;
+                    const x = index * (barWidth + barSpacing) + barSpacing / 2;
+                    const y = height - barHeight;
+                    salesCtx.fillRect(x, y, barWidth, barHeight);
+                });
+            };
+            
+            salesCanvas.width = salesCanvas.offsetWidth;
+            salesCanvas.height = salesCanvas.offsetHeight;
+            window.addEventListener('resize', () => {
+                salesCanvas.width = salesCanvas.offsetWidth;
+                salesCanvas.height = salesCanvas.offsetHeight;
+                drawChart();
+            });
+            drawChart();
+        });
+    </script>
+</body>
+</html>

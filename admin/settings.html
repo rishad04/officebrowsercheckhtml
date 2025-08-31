@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Settings</title><link rel="stylesheet" href="styles.css"></head>
+<body>
+  <button class="toggle-btn">☰</button>
+  <div class="sidebar">
+    <ul>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="settings.html" class="active">Settings</a></li>
+      <li><a href="roles.html">Roles & Permissions</a></li>
+      <li><a href="index.html">Logout</a></li>
+    </ul>
+  </div>
+  <div class="main">
+    <h2>Settings</h2>
+    <form onsubmit="event.preventDefault(); alert('Settings Saved');">
+      <div class="form-group"><label>Language</label><select><option>English</option><option>Bangla</option></select></div>
+      <div class="form-group"><label>Theme</label><select><option>Light</option><option>Dark</option></select></div>
+      <button type="submit">Save Settings</button>
+    </form>
+  </div>
+  <script src="scripts.js"></script>
+</body>
+</html>
