@@ -182,8 +182,49 @@
       font-weight: 600;
     }
 
+    /* Container for all contact info */
+    .contact {
+      /* Use flexbox to easily arrange and wrap contact items */
+      display: flex;
+      flex-wrap: wrap;
+      /* Allows items to wrap onto a new line if the screen is too narrow */
+      gap: 15px 25px;
+      /* Spacing between the contact items (vertical and horizontal) */
+      margin-top: 5px;
+    }
+
+    /* Styling for each individual contact span */
+    .contact span {
+      /* Use flexbox again to align the icon and text perfectly */
+      display: flex;
+      align-items: center;
+      /* This is the key: vertically centers the icon with the text */
+    }
+
+    /* Styling for all SVG icons */
+    .contact svg {
+      /* Makes sure the icons are exactly 16x16px */
+      width: 16px;
+      height: 16px;
+      /* Adds a little space between the icon and the text */
+      margin-right: 6px;
+      /* You can set the color here, e.g., to match your text color */
+      color: #333;
+    }
+
+    /* Optional: Style for the 'role' line to separate it from the contact info */
+    .role {
+      margin-bottom: 10px;
+    }
+
+
     .btn:hover {
       border-color: #cbd5e1;
+    }
+
+    .mb-3 {
+      margin-bottom: 1.5rem;
+      ;
     }
 
     /* Print styles */
@@ -235,24 +276,84 @@
       }
     }
   </style>
+
+  <style>
+    /* General A4 setup */
+    @page {
+      size: A4;
+      margin: 20mm;
+    }
+
+    /* Hide the toolbar when printing */
+    @media print {
+      .toolbar {
+        display: none;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
+        color: #000;
+        background: white;
+      }
+
+      .content {
+        width: 100%;
+        max-width: 210mm;
+        margin: 0 auto;
+        padding: 20mm;
+      }
+
+      /* Ensure no overflow */
+      * {
+        box-sizing: border-box;
+      }
+    }
+  </style>
+
 </head>
 
 <body>
-  <div class="page" role="document">
+  <div class="page content" role="document">
     <header>
       <div class="name" aria-label="Candidate name">Rishad Hossain</div>
       <div class="role">Backend Developer (Laravel)</div>
-      <div class="contact" aria-label="Contact and links">
-        <span>Email: <a href="mailto:rishadhossaincareer@gmail.com">rishadhossaincareer@gmail.com</a></span>
-        <span>Phone: <a href="tel:+8801920502041">01920502041</a></span>
-        <span>Location: 5, Elephant Road, Dhaka</span>
-        <span>LinkedIn: <a
-            href="https://linkedin.com/in/rishad-hossain-591b8a2b1">linkedin.com/in/rishad-hossain-591b8a2b1</a></span>
+      <div class="contact mb-3" aria-label="Contact and links">
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path
+              d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.026a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4.697l-5.803 3.54L8 10.05l-2.197-1.35L0 4.697Z" />
+          </svg>
+          Email: <a href="mailto:rishadhossaincareer@gmail.com">rishadhossaincareer@gmail.com</a>
+        </span>
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path
+              d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.144-.43 1.832.52.88 1.488 2.373 2.872 4.052 1.41 1.768 2.923 3.325 4.595 4.382.9.58 1.968.784 3.033.725a.866.866 0 0 0 .801-.918l-.42-4.045a.498.498 0 0 0-.173-.347L11.516 6.4a1.238 1.238 0 0 0-.181-.137l-2.261-1.745a.488.488 0 0 0-.256-.046l-.371.056c-.05.008-.13.007-.193.007-.158.007-.294.018-.42.046a.547.547 0 0 0-.138.07l-.364.218a.64.64 0 0 0-.154.127l-.342.342a.5.5 0 0 0-.14.15l-.013.04a.611.611 0 0 0-.154.204L4.852 9.4c-.053.11-.059.23-.008.35a1.868 1.868 0 0 0 .15.344c.164.38.384.757.643 1.096.345.45.714.887 1.096 1.291.385.405.794.776 1.23.957.19.08.388.136.592.164.205.027.414.032.62.012l.004-.001a1.05 1.05 0 0 0 1.09-.43l.5-.833.682-1.137c.392-.65.618-1.425.618-2.227 0-1.125-.262-2.182-.72-3.13z" />
+          </svg>
+          Phone: <a href="tel:+8801920502041" target="_blank">01920502041</a>
+        </span>
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+          </svg>
+          Location: 5, Elephant Road, Dhaka
+        </span>
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path
+              d="M0 1.146C0 .513.526 0 1.176 0h13.648c.65 0 1.176.513 1.176 1.146v13.708c0 .633-.526 1.146-1.176 1.146H1.176C.526 16 0 15.487 0 14.854V1.146zm4.943 12.24H2.476V6.031h2.467v7.355zm-1.248-8.216c-.837 0-1.348-.522-1.348-1.21 0-.691.512-1.22 1.321-1.22.812 0 1.314.529 1.342 1.233-.004.708-.507 1.217-1.32 1.217zm6.756 8.216H8.163V9.205c0-.447-.19-.948-.718-1.246-.51-.303-1.233-.298-1.58-.298-.242 0-.468.04-.682.176v4.613H3.212s.06-6.621 0-7.355h2.467V7.07c.356-.514.93-.934 2.18-1.12 1.62-.236 3.003.54 3.003 2.825v4.576z" />
+          </svg>
+          LinkedIn: <a href="https://linkedin.com/in/rishad-hossain-591b8a2b1" target="_blank"
+            **>linkedin.com/in/rishad-hossain-591b8a2b1</a>
+        </span>
       </div>
       <div class="toolbar">
         <button class="btn" onclick="window.print()">Download / Print PDF</button>
         <a class="btn" href="#experience">Jump to Experience</a>
       </div>
+
 
       <section class="card" id="summary">
         <h2>Summary</h2>
