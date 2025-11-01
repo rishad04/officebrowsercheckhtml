@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Rishad — Laravel Developer, React Learner, and DevOps Enthusiast. Building scalable apps with clean code and modern design.">
+  <title>Rishad | Laravel Developer Portfolio</title>
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  <link rel="icon" href="assets/icons/favicon.png">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #ec4899;
+      --dark: #0f172a;
+      --dark-light: #1e293b;
+      --gray: #64748b;
+      --light: #f1f5f9;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--dark);
+      color: var(--light);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: all 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: rgba(15, 23, 42, 0.95);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--light);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      width: 25px;
+      height: 3px;
+      background: var(--light);
+      margin: 3px 0;
+      transition: 0.3s;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 0 2rem;
+    }
+
+    .hero-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(236, 72, 153, 0.15) 0%, transparent 50%);
+      animation: pulse 8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.8;
+      }
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      animation: fadeInUp 1s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-tag {
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 50px;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      animation: fadeInUp 1s ease 0.2s both;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--white), var(--gray));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInUp 1s ease 0.4s both;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: var(--gray);
+      margin-bottom: 2rem;
+      animation: fadeInUp 1s ease 0.6s both;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 1s ease 0.8s both;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--white);
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--light);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(99, 102, 241, 0.1);
+      transform: translateY(-3px);
+    }
+
+    /* Section Styles */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-tag {
+      color: var(--primary);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .section-description {
+      color: var(--gray);
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+    }
+
+    /* Experience Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 2px;
+      background: linear-gradient(180deg, var(--primary), var(--secondary));
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3rem;
+      padding-left: 2rem;
+      animation: fadeInLeft 0.6s ease;
+    }
+
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.5rem;
+      top: 0;
+      width: 12px;
+      height: 12px;
+      background: var(--primary);
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px var(--dark), 0 0 0 6px var(--primary);
+    }
+
+    .timeline-content {
+      background: var(--dark-light);
+      padding: 2rem;
+      border-radius: 15px;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .timeline-content:hover {
+      transform: translateX(10px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 40px rgba(99, 102, 241, 0.2);
+    }
+
+    .timeline-date {
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-company {
+      color: var(--gray);
+      margin-bottom: 1rem;
+    }
+
+    .timeline-description {
+      color: var(--gray);
+      line-height: 1.8;
+    }
+
+    /* Education Cards */
+    .education-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .education-card {
+      background: var(--dark-light);
+      padding: 2rem;
+      border-radius: 15px;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      transition: all 0.3s ease;
+      animation: fadeInUp 0.6s ease;
+    }
+
+    .education-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--primary);
+      box-shadow: 0 20px 50px rgba(99, 102, 241, 0.2);
+    }
+
+    .education-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .education-degree {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .education-school {
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .education-year {
+      color: var(--gray);
+      margin-bottom: 1rem;
+    }
+
+    .education-details {
+      color: var(--gray);
+    }
+
+    /* Projects Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: var(--dark-light);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      transition: all 0.3s ease;
+      animation: fadeInUp 0.6s ease;
+      cursor: pointer;
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+    }
+
+    .project-image {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-image::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .project-card:hover .project-image::after {
+      opacity: 1;
+    }
+
+    .project-content {
+      padding: 2rem;
+    }
+
+    .project-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .project-tag {
+      padding: 0.3rem 1rem;
+      background: rgba(99, 102, 241, 0.1);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: var(--primary);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+
+    .project-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .project-description {
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .project-stats {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(99, 102, 241, 0.2);
+    }
+
+    .project-stat {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .project-link {
+      flex: 1;
+      padding: 0.8rem;
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 10px;
+      text-align: center;
+      color: var(--primary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+
+    .project-link:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    /* Testimonials */
+    .testimonials-slider {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .testimonial {
+      background: var(--dark-light);
+      padding: 3rem;
+      border-radius: 20px;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      text-align: center;
+      animation: fadeInUp 0.6s ease;
+    }
+
+    .testimonial-quote {
+      font-size: 1.2rem;
+      color: var(--light);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .testimonial-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .testimonial-info {
+      text-align: left;
+    }
+
+    .testimonial-name {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .testimonial-role {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .testimonial-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(99, 102, 241, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      background: var(--primary);
+      width: 30px;
+      border-radius: 5px;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark-light);
+      padding: 3rem 2rem;
+      text-align: center;
+      border-top: 1px solid rgba(99, 102, 241, 0.2);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .social-link {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 1.2rem;
+    }
+
+    .social-link:hover {
+      background: var(--primary);
+      color: var(--white);
+      transform: translateY(-5px);
+    }
+
+    .footer-text {
+      color: var(--gray);
+    }
+
+    /* Scroll to top button */
+    .scroll-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 999;
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+    }
+
+    .scroll-top.visible {
+      opacity: 1;
+    }
+
+    .scroll-top:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: var(--dark-light);
+        flex-direction: column;
+        padding: 2rem;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .nav-links.active {
+        transform: translateX(0);
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .timeline {
+        padding-left: 1rem;
+      }
+
+      .timeline-item {
+        padding-left: 1.5rem;
+      }
+
+      .projects-grid,
+      .education-grid {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 4rem 1.5rem;
+      }
+
+      .testimonial {
+        padding: 2rem;
+      }
+    }
+
+    /* Smooth scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Loading animation */
+    @keyframes shimmer {
+      0% {
+        background-position: -1000px 0;
+      }
+
+      100% {
+        background-position: 1000px 0;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-900 font-sans tracking-wide">
+
+  <!-- 🌟 Navbar -->
+  <header class="fixed w-full bg-white/80 backdrop-blur-lg shadow-sm z-50">
+    <nav class="container mx-auto flex items-center justify-between py-4 px-6">
+      <h1 class="text-2xl font-bold text-indigo-600">Rishad.dev</h1>
+      <ul class="hidden md:flex space-x-8 text-sm font-medium">
+        <li><a href="#about" class="hover:text-indigo-600">About</a></li>
+        <li><a href="#skills" class="hover:text-indigo-600">Skills</a></li>
+        <li><a href="#projects" class="hover:text-indigo-600">Projects</a></li>
+        <li><a href="#experience" class="hover:text-indigo-600">Experience</a></li>
+        <li><a href="#contact" class="hover:text-indigo-600">Contact</a></li>
+      </ul>
+      <button id="themeToggle" class="md:hidden text-indigo-600">
+        ☀️
+      </button>
+    </nav>
+  </header>
+
+  <!-- 🌠 Hero Section -->
+  <section id="hero"
+    class="min-h-screen flex flex-col justify-center items-center text-center bg-gradient-to-br from-indigo-50 via-white to-gray-100 px-6 pt-24">
+    <h2 class="text-4xl md:text-6xl font-extrabold mb-4">Hi, I’m <span class="text-indigo-600">Rishad</span></h2>
+    <p class="text-lg md:text-xl text-gray-600 mb-6 max-w-2xl">
+      A <strong>Laravel Developer</strong> crafting high-performance web apps with clean backend logic, smooth REST
+      APIs, and modern frontend integration.
+    </p>
+    <div class="flex gap-4">
+      <a href="#projects" class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">View
+        Projects</a>
+      <a href="#contact"
+        class="px-6 py-3 border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition">Contact
+        Me</a>
+    </div>
+  </section>
+
+  <!-- 👤 About Section -->
+  <section id="about" class="py-24 bg-white">
+    <div class="container mx-auto px-6 md:px-12 lg:px-20">
+      <h3 class="text-3xl font-bold mb-6 text-indigo-600">About Me</h3>
+      <p class="text-gray-700 leading-relaxed max-w-3xl">
+        I’m a passionate <strong>Laravel Developer</strong> who loves turning real-world problems into elegant digital
+        solutions.
+        I enjoy building scalable CMS, LMS, and eCommerce platforms using Laravel, React, MySQL, and Tailwind CSS.
+        With a DevOps mindset, I deploy and maintain projects efficiently using CI/CD pipelines, Git workflows, and
+        DigitalOcean VPS setups.
+      </p>
+    </div>
+  </section>
+
+  <!-- 🧠 Skills Section -->
+  <section id="skills" class="py-24 bg-gray-50">
+    <div class="container mx-auto px-6 md:px-12 lg:px-20">
+      <h3 class="text-3xl font-bold mb-10 text-indigo-600 text-center">Tech Stack</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 text-center">
+        <div class="p-4 bg-white shadow-md rounded-xl hover:shadow-lg transition">Laravel</div>
+        <div class="p-4 bg-white shadow-md rounded-xl hover:shadow-lg transition">PHP</div>
+        <div class="p-4 bg-white shadow-md rounded-xl hover:shadow-lg transition">MySQL</div>
+        <div class="p-4 bg-white shadow-md rounded-xl hover:shadow-lg transition">React</div>
+        <div class="p-4 bg-white shadow-md rounded-xl hover:shadow-lg transition">Tailwind CSS</div>
+        <div class="p-4 bg-white shadow-md rounded-xl hover:shadow-lg transition">Git / Bitbucket</div>
+        <div class="p-4 bg-white shadow-md rounded-xl hover:shadow-lg transition">DigitalOcean</div>
+        <div class="p-4 bg-white shadow-md rounded-xl hover:shadow-lg transition">CI/CD</div>
+        <div class="p-4 bg-white shadow-md rounded-xl hover:shadow-lg transition">RESTful API</div>
+        <div class="p-4 bg-white shadow-md rounded-xl hover:shadow-lg transition">Linux / Ubuntu</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 💼 Projects Section -->
+  <section id="projects" class="py-24 bg-white">
+    <div class="container mx-auto px-6 md:px-12 lg:px-20">
+      <h3 class="text-3xl font-bold mb-10 text-indigo-600 text-center">Featured Projects</h3>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Project Card -->
+        <div class="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
+          <img src="assets/images/lms.png" alt="LMS Project" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <h4 class="text-xl font-semibold mb-2">LMS Platform</h4>
+            <p class="text-gray-600 text-sm mb-3">Built with Laravel 10, MySQL, and Tailwind CSS. Includes multi-role
+              management, lesson scheduling, and progress tracking.</p>
+            <a href="#" class="text-indigo-600 font-medium hover:underline">View Details →</a>
+          </div>
+        </div>
+
+        <div class="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
+          <img src="assets/images/ecommerce.png" alt="eCommerce" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <h4 class="text-xl font-semibold mb-2">eCommerce Platform</h4>
+            <p class="text-gray-600 text-sm mb-3">A full-stack store using Laravel + React for dynamic product views,
+              cart, and checkout.</p>
+            <a href="#" class="text-indigo-600 font-medium hover:underline">View Details →</a>
+          </div>
+        </div>
+
+        <div class="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
+          <img src="assets/images/hr.png" alt="HRM" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <h4 class="text-xl font-semibold mb-2">Human Resource Manager</h4>
+            <p class="text-gray-600 text-sm mb-3">HRM system with employee management, payroll automation, and
+              role-based dashboards.</p>
+            <a href="#" class="text-indigo-600 font-medium hover:underline">View Details →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🧩 Experience Section -->
+  <section id="experience" class="py-24 bg-gray-50">
+    <div class="container mx-auto px-6 md:px-12 lg:px-20">
+      <h3 class="text-3xl font-bold mb-10 text-indigo-600 text-center">Experience</h3>
+      <div class="space-y-8">
+        <div class="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition">
+          <h4 class="text-xl font-semibold">Backend Developer — The Tork</h4>
+          <p class="text-sm text-gray-500">2024 — Present</p>
+          <p class="mt-3 text-gray-700 text-sm leading-relaxed">
+            Managing clients & their projects, developing scalable CMS/LMS, optimizing APIs, handling CI/CD pipelines,
+            and deploying to DigitalOcean.
+          </p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition">
+          <h4 class="text-xl font-semibold">Trainee Developer — QuickTech IT</h4>
+          <p class="text-sm text-gray-500">2023 — 2024</p>
+          <p class="mt-3 text-gray-700 text-sm leading-relaxed">
+            Gained hands-on experience in HTML, CSS, JS, and Laravel basics, focusing on responsive design and Git
+            version control.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 💬 Contact Section -->
+  <section id="contact" class="py-24 bg-white">
+    <div class="container mx-auto px-6 md:px-12 lg:px-20 text-center">
+      <h3 class="text-3xl font-bold mb-6 text-indigo-600">Get in Touch</h3>
+      <p class="text-gray-600 mb-8 max-w-xl mx-auto">Have a project idea or want to collaborate? Let’s connect!</p>
+      <form class="max-w-md mx-auto space-y-4">
+        <input type="text" placeholder="Your Name"
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        <input type="email" placeholder="Your Email"
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        <textarea placeholder="Your Message" rows="4"
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+        <button class="w-full py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">Send
+          Message</button>
+      </form>
+      <div class="mt-10 flex justify-center space-x-6">
+        <a href="https://github.com/rishad04" target="_blank" class="text-gray-600 hover:text-indigo-600">GitHub</a>
+        <a href="https://linkedin.com" target="_blank" class="text-gray-600 hover:text-indigo-600">LinkedIn</a>
+        <a href="mailto:rishad@example.com" class="text-gray-600 hover:text-indigo-600">Email</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⚙️ Footer -->
+  <footer class="py-6 bg-gray-100 text-center text-sm text-gray-600">
+    © 2025 Rishad. Built with ❤️ using Laravel mindset, Tailwind CSS & clean code.
+  </footer>
+
+  <script>
+    // Optional: Dark mode toggle
+    const btn = document.getElementById('themeToggle');
+    btn?.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+  </script>
+
+</body>
+
+</html>

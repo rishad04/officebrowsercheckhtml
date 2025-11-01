@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Professional Developer Portfolio - Full Stack Developer with expertise in modern web technologies">
+    <meta name="description"
+        content="Professional Developer Portfolio - Full Stack Developer with expertise in modern web technologies">
     <meta name="keywords" content="developer, portfolio, full stack, web development, javascript, react">
     <title>John Doe - Full Stack Developer</title>
-    
+
     <!-- Preload critical resources -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        as="style">
     <link rel="preload" href="#" as="video" type="video/mp4">
-    
+
     <!-- Critical CSS -->
     <style>
         /* CSS Reset & Variables */
@@ -42,10 +45,11 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--dark);
+            color: var(--light);
             line-height: 1.6;
-            color: var(--text-primary);
-            background: var(--background);
+            overflow-x: hidden;
         }
 
         /* Utility Classes */
@@ -127,9 +131,17 @@
             gap: 2rem;
         }
 
-        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
-        .grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
 
         /* Header & Navigation */
         .header {
@@ -743,8 +755,13 @@
         }
 
         @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
         }
 
         /* Performance Optimization */
@@ -761,6 +778,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header class="header" id="header">
@@ -788,26 +806,21 @@
                 <div class="hero-text fade-in">
                     <h1>Full Stack Developer</h1>
                     <p class="subtitle">Building Digital Solutions</p>
-                    <p>I'm a passionate full-stack developer with 5+ years of experience creating scalable web applications. I specialize in React, Node.js, and modern web technologies to deliver exceptional user experiences.</p>
+                    <p>I'm a passionate full-stack developer with 5+ years of experience creating scalable web
+                        applications. I specialize in React, Node.js, and modern web technologies to deliver exceptional
+                        user experiences.</p>
                     <div class="hero-actions">
                         <a href="#contact" class="btn">Get In Touch</a>
                         <a href="#projects" class="btn btn-outline">View Projects</a>
-                        <a href="https://example.com/resume.pdf" target="_blank" class="btn btn-outline">Download Resume</a>
+                        <a href="https://example.com/resume.pdf" target="_blank" class="btn btn-outline">Download
+                            Resume</a>
                     </div>
                 </div>
                 <div class="hero-video fade-in">
-                    <video 
-                        autoplay 
-                        muted 
-                        loop 
-                        playsinline 
-                        preload="metadata"
+                    <video autoplay muted loop playsinline preload="metadata"
                         poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23f8fafc'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%236b7280' font-family='system-ui' font-size='18'%3ECoding Video Preview%3C/text%3E%3C/svg%3E"
-                        id="heroVideo"
-                        class="video-loading"
-                    >
+                        id="heroVideo" class="video-loading">
                         <source src="assets/videos/Web_Developer_Intro_Video_Creation.mp4" type="video/mp4">
-                        <!-- <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4"> -->
                         Your browser does not support the video tag.
                     </video>
                 </div>
@@ -862,19 +875,22 @@
                             <div class="timeline-date">2022 - Present</div>
                             <h3>Senior Full Stack Developer</h3>
                             <div class="timeline-company">TechCorp Inc.</div>
-                            <p>Led development of microservices architecture serving 1M+ users. Implemented CI/CD pipelines reducing deployment time by 70%.</p>
+                            <p>Led development of microservices architecture serving 1M+ users. Implemented CI/CD
+                                pipelines reducing deployment time by 70%.</p>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-date">2020 - 2022</div>
                             <h3>Full Stack Developer</h3>
                             <div class="timeline-company">Digital Solutions Ltd.</div>
-                            <p>Developed and maintained 10+ client projects using React and Node.js. Improved application performance by 40%.</p>
+                            <p>Developed and maintained 10+ client projects using React and Node.js. Improved
+                                application performance by 40%.</p>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-date">2019 - 2020</div>
                             <h3>Frontend Developer</h3>
                             <div class="timeline-company">StartupXYZ</div>
-                            <p>Built responsive web applications and collaborated with UX/UI designers to create user-friendly interfaces.</p>
+                            <p>Built responsive web applications and collaborated with UX/UI designers to create
+                                user-friendly interfaces.</p>
                         </div>
                     </div>
                 </div>
@@ -917,7 +933,8 @@
                     <div class="project-image">🛒</div>
                     <div class="project-content">
                         <h3>E-Commerce Platform</h3>
-                        <p>Full-stack e-commerce solution with payment integration, inventory management, and admin dashboard.</p>
+                        <p>Full-stack e-commerce solution with payment integration, inventory management, and admin
+                            dashboard.</p>
                         <div class="project-tech">
                             <span class="tech-tag">React</span>
                             <span class="tech-tag">Node.js</span>
@@ -934,7 +951,8 @@
                     <div class="project-image">📊</div>
                     <div class="project-content">
                         <h3>Analytics Dashboard</h3>
-                        <p>Real-time analytics dashboard with data visualization and reporting features for business insights.</p>
+                        <p>Real-time analytics dashboard with data visualization and reporting features for business
+                            insights.</p>
                         <div class="project-tech">
                             <span class="tech-tag">Vue.js</span>
                             <span class="tech-tag">D3.js</span>
@@ -951,7 +969,8 @@
                     <div class="project-image">💬</div>
                     <div class="project-content">
                         <h3>Chat Application</h3>
-                        <p>Real-time messaging application with file sharing, group chats, and end-to-end encryption.</p>
+                        <p>Real-time messaging application with file sharing, group chats, and end-to-end encryption.
+                        </p>
                         <div class="project-tech">
                             <span class="tech-tag">React</span>
                             <span class="tech-tag">Socket.io</span>
@@ -1009,17 +1028,20 @@
             </div>
             <div class="grid grid-3" id="testimonialsGrid">
                 <div class="testimonial-card fade-in">
-                    <p class="testimonial-text">John delivered an exceptional e-commerce platform that exceeded our expectations. His attention to detail and technical expertise is outstanding.</p>
+                    <p class="testimonial-text">John delivered an exceptional e-commerce platform that exceeded our
+                        expectations. His attention to detail and technical expertise is outstanding.</p>
                     <div class="testimonial-author">Sarah Johnson</div>
                     <div class="testimonial-role">CEO, Fashion Forward</div>
                 </div>
                 <div class="testimonial-card fade-in">
-                    <p class="testimonial-text">Working with John was a game-changer for our startup. He built a scalable solution that grew with our business needs.</p>
+                    <p class="testimonial-text">Working with John was a game-changer for our startup. He built a
+                        scalable solution that grew with our business needs.</p>
                     <div class="testimonial-author">Michael Chen</div>
                     <div class="testimonial-role">CTO, TechStart</div>
                 </div>
                 <div class="testimonial-card fade-in">
-                    <p class="testimonial-text">Professional, reliable, and incredibly skilled. John transformed our outdated system into a modern, efficient platform.</p>
+                    <p class="testimonial-text">Professional, reliable, and incredibly skilled. John transformed our
+                        outdated system into a modern, efficient platform.</p>
                     <div class="testimonial-author">Emily Rodriguez</div>
                     <div class="testimonial-role">Operations Manager, DataFlow</div>
                 </div>
@@ -1200,7 +1222,7 @@
                 let scrollTimer = null;
                 window.addEventListener('scroll', () => {
                     if (scrollTimer) return;
-                    
+
                     scrollTimer = setTimeout(() => {
                         this.handleScroll();
                         scrollTimer = null;
@@ -1242,7 +1264,7 @@
 
             handleScroll() {
                 const currentScroll = window.pageYOffset;
-                
+
                 // Header background on scroll
                 if (currentScroll > 100) {
                     this.elements.header?.classList.add('scrolled');
@@ -1260,13 +1282,13 @@
             updateActiveNavLink() {
                 const sections = document.querySelectorAll('section[id]');
                 const navLinks = document.querySelectorAll('.nav-links a');
-                
+
                 let current = '';
-                
+
                 sections.forEach(section => {
                     const sectionTop = section.getBoundingClientRect().top;
                     const sectionHeight = section.offsetHeight;
-                    
+
                     if (sectionTop <= 100 && sectionTop + sectionHeight > 100) {
                         current = section.getAttribute('id');
                     }
@@ -1282,7 +1304,7 @@
 
             toggleMobileMenu() {
                 this.state.isMenuOpen = !this.state.isMenuOpen;
-                
+
                 if (this.state.isMenuOpen) {
                     this.elements.navLinks?.classList.add('active');
                     this.elements.mobileMenuBtn.innerHTML = '✕';
@@ -1296,21 +1318,21 @@
 
             setupSmoothNavigation() {
                 const navLinks = document.querySelectorAll('a[href^="#"]');
-                
+
                 navLinks.forEach(link => {
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
-                        
+
                         const targetId = link.getAttribute('href').substring(1);
                         const targetElement = document.getElementById(targetId);
-                        
+
                         if (targetElement) {
                             const headerHeight = this.elements.header?.offsetHeight || 0;
-                            const targetPosition = targetElement.getBoundingClientRect().top + 
-                                                 window.pageYOffset - headerHeight - 20;
-                            
+                            const targetPosition = targetElement.getBoundingClientRect().top +
+                                window.pageYOffset - headerHeight - 20;
+
                             this.smoothScrollTo(targetPosition);
-                            
+
                             // Close mobile menu if open
                             if (this.state.isMenuOpen) {
                                 this.toggleMobileMenu();
@@ -1330,9 +1352,9 @@
                     if (start === null) start = currentTime;
                     const timeElapsed = currentTime - start;
                     const run = this.easeInOutQuad(timeElapsed, startPosition, distance, duration);
-                    
+
                     window.scrollTo(0, run);
-                    
+
                     if (timeElapsed < duration) {
                         requestAnimationFrame(animation);
                     }
@@ -1359,7 +1381,7 @@
                         if (entry.isIntersecting && !this.state.animatedElements.has(entry.target)) {
                             entry.target.classList.add('visible');
                             this.state.animatedElements.add(entry.target);
-                            
+
                             // Stop observing once animated
                             observer.unobserve(entry.target);
                         }
@@ -1440,22 +1462,22 @@
 
             handleFormSubmit(e) {
                 e.preventDefault();
-                
+
                 const form = e.target;
                 const formData = new FormData(form);
                 const data = Object.fromEntries(formData);
-                
+
                 // Validate form
                 if (!this.validateForm(data)) {
                     return;
                 }
-                
+
                 // Show loading state
                 const submitBtn = form.querySelector('button[type="submit"]');
                 const originalText = submitBtn.textContent;
                 submitBtn.textContent = 'Sending...';
                 submitBtn.disabled = true;
-                
+
                 // Simulate form submission (replace with actual endpoint)
                 setTimeout(() => {
                     this.showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
@@ -1468,28 +1490,28 @@
 
             validateForm(data) {
                 const errors = [];
-                
+
                 if (!data.name || data.name.trim().length < 2) {
                     errors.push('Name must be at least 2 characters long');
                 }
-                
+
                 if (!data.email || !this.isValidEmail(data.email)) {
                     errors.push('Please enter a valid email address');
                 }
-                
+
                 if (!data.subject || data.subject.trim().length < 5) {
                     errors.push('Subject must be at least 5 characters long');
                 }
-                
+
                 if (!data.message || data.message.trim().length < 10) {
                     errors.push('Message must be at least 10 characters long');
                 }
-                
+
                 if (errors.length > 0) {
                     this.showNotification(errors.join('. '), 'error');
                     return false;
                 }
-                
+
                 return true;
             }
 
@@ -1508,7 +1530,7 @@
                         <button class="notification-close" aria-label="Close notification">✕</button>
                     </div>
                 `;
-                
+
                 // Add styles dynamically
                 if (!document.getElementById('notification-styles')) {
                     const style = document.createElement('style');
@@ -1549,18 +1571,18 @@
                     `;
                     document.head.appendChild(style);
                 }
-                
+
                 document.body.appendChild(notification);
-                
+
                 // Show notification
                 setTimeout(() => notification.classList.add('show'), 100);
-                
+
                 // Handle close button
                 const closeBtn = notification.querySelector('.notification-close');
                 closeBtn.addEventListener('click', () => {
                     this.hideNotification(notification);
                 });
-                
+
                 // Auto hide after 5 seconds
                 setTimeout(() => {
                     this.hideNotification(notification);
@@ -1581,7 +1603,7 @@
                 if (e.key === 'Escape' && this.state.isMenuOpen) {
                     this.toggleMobileMenu();
                 }
-                
+
                 // Handle focus management for accessibility
                 if (e.key === 'Tab') {
                     this.manageFocus(e);
@@ -1595,7 +1617,7 @@
                     if (focusableElements && focusableElements.length > 0) {
                         const firstElement = focusableElements[0];
                         const lastElement = focusableElements[focusableElements.length - 1];
-                        
+
                         if (e.shiftKey && document.activeElement === firstElement) {
                             e.preventDefault();
                             lastElement.focus();
@@ -1612,20 +1634,20 @@
                 if (window.innerWidth >= 768 && this.state.isMenuOpen) {
                     this.toggleMobileMenu();
                 }
-                
+
                 this.logPerformance('Window resized');
             }
 
             initializePerformanceOptimizations() {
                 // Preload critical resources
                 this.preloadResources();
-                
+
                 // Setup lazy loading for images
                 this.setupLazyLoading();
-                
+
                 // Performance monitoring
                 this.setupPerformanceMonitoring();
-                
+
                 this.logPerformance('Performance optimizations initialized');
             }
 
@@ -1635,7 +1657,7 @@
                 fontLink.rel = 'preload';
                 fontLink.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap';
                 fontLink.as = 'style';
-                fontLink.onload = function() {
+                fontLink.onload = function () {
                     this.onload = null;
                     this.rel = 'stylesheet';
                 };
@@ -1644,7 +1666,7 @@
 
             setupLazyLoading() {
                 const images = document.querySelectorAll('img[data-src]');
-                
+
                 const imageObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
@@ -1673,7 +1695,7 @@
                 window.addEventListener('load', () => {
                     const loadTime = Date.now() - this.performance.startTime;
                     this.logPerformance(`Page loaded in ${loadTime}ms`);
-                    
+
                     // Report to analytics in production
                     if (typeof gtag !== 'undefined') {
                         gtag('event', 'timing_complete', {
@@ -1687,7 +1709,7 @@
             logPerformance(event) {
                 const timestamp = Date.now() - this.performance.startTime;
                 this.performance.loadEvents.push({ event, timestamp });
-                
+
                 if (window.console && window.console.log) {
                     console.log(`[${timestamp}ms] ${event}`);
                 }
@@ -1698,8 +1720,8 @@
                 const element = document.getElementById(sectionId);
                 if (element) {
                     const headerHeight = this.elements.header?.offsetHeight || 0;
-                    const targetPosition = element.getBoundingClientRect().top + 
-                                         window.pageYOffset - headerHeight - 20;
+                    const targetPosition = element.getBoundingClientRect().top +
+                        window.pageYOffset - headerHeight - 20;
                     this.smoothScrollTo(targetPosition);
                 }
             }
@@ -1746,4 +1768,5 @@
         });
     </script>
 </body>
+
 </html>
